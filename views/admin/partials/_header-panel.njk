@@ -1,0 +1,21 @@
+<div class="app-navbar flex-lg-grow-1" id="kt_app_header_navbar">
+	<div class="app-navbar-item d-flex align-items-stretch flex-lg-grow-1 me-1 me-lg-0">
+		{# Header search panel #}
+		{# {% include './_header-search-panel.njk' %} #}
+
+		{# Country select toggle #}
+		{% include './_change-location.njk' %}
+	</div>
+
+	<div class="d-flex align-items-stretch" data-kt-menu-trigger="auto" data-kt-menu-overflow="false" data-kt-menu-permanent="true" data-kt-menu-placement="bottom-end" id="kt_header">
+		<div class="d-flex align-items-center" data-kt-search-element="toggle" id="kt_header_toggle">
+			{# You can uncomment the following line if needed #}
+			{# <div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px w-md-40px h-md-40px"></div> #}
+			<div class="btn btn-custom btn-active-light btn-active-color-primary">
+				<span class="svg-icon svg-icon-1">{{ selectedCountry.name.en }} | {% if selectedLocation.name %} {{ selectedLocation.name.en }} {% else %} Location not selected {% endif %}</span>
+			</div>
+		</div>
+	</div>
+</div>
+
+

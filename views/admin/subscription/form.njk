@@ -1,0 +1,253 @@
+{% extends "../layouts/master.njk" %}
+
+{% block container %}
+    <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+        <div class="d-flex flex-column flex-column-fluid">
+            <!--begin::Toolbar-->
+            <div id="kt_app_toolbar" class="app-toolbar pt-2 pt-lg-10">
+                <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex align-items-stretch">
+                    <div class="app-toolbar-wrapper d-flex flex-stack flex-wrap gap-4 w-100">
+                        <div class="page-title d-flex flex-column justify-content-center gap-1 me-3">
+                            <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bold fs-3 m-0">
+                                {% if subscription %}Edit{% else %}Add{% endif %} Subscription
+                            </h1>
+                            <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0">
+                                <li class="breadcrumb-item text-muted">
+                                    <a href="/admin/dashboard" class="text-muted text-hover-primary">Home</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <span class="bullet bg-gray-500 w-5px h-2px"></span>
+                                </li>
+                                <li class="breadcrumb-item text-muted">
+                                    <a href="/admin/subscription" class="text-muted text-hover-primary">Subscriptions</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <span class="bullet bg-gray-500 w-5px h-2px"></span>
+                                </li>
+                                <li class="breadcrumb-item text-muted">
+                                    {% if subscription %}Edit{% else %}Add{% endif %}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end::Toolbar-->
+
+            <!--begin::Content-->
+            <div id="kt_app_content" class="app-content flex-column-fluid">
+                <div id="kt_app_content_container" class="app-container container-fluid">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Subscription Information</h3>
+                        </div>
+
+                        <form id="kt_subscription_form"
+                            class="es-form"
+                            action="/admin/subscription/save"
+                            data-redirect-url="/admin/subscription"
+                            method="POST"
+                            novalidate="novalidate">
+
+                            <input type="hidden" name="id" value="{{ subscription.id if subscription else '' }}">
+
+                            <div class="card-body">
+                                <!--begin::Customer-->
+                                <div class="row mb-6">
+                                    <label class="col-lg-3 col-form-label required fw-semibold fs-6">Customer</label>
+                                    <div class="col-lg-9">
+                                        <select name="customerId" 
+                                                id="customer_select"
+                                                class="form-select form-select-solid form-select-lg" 
+                                                data-control="select2" 
+                                                data-placeholder="Select customer"
+                                                data-selected-id="{{ subscription.customer.id if subscription and subscription.customer else '' }}"
+                                                required>
+                                            <option value="">Select customer...</option>
+                                            {# customers will be loaded via AJAX #}
+                                        </select>
+                                        <div id="field-error-customerId" class="fv-plugins-message-container invalid-feedback"></div>
+                                    </div>
+                                </div>
+                                <!--end::Customer-->
+
+                                <!--begin::Category-->
+                                <div class="row mb-6">
+                                    <label class="col-lg-3 col-form-label fw-semibold required fs-6">Category</label>
+                                    <div class="col-lg-9">
+                                        <select name="categoryId" class="form-select form-select-solid form-select-lg"
+                                                data-control="select2"
+                                                data-placeholder="Select category"
+                                                required>
+                                            <option value="">Select Category</option>
+                                            {% for cat in categories %}
+                                                <option value="{{ cat.id }}"
+                                                    {% if subscription and subscription.category and subscription.category.id == cat.id %}selected{% endif %}>
+                                                    {{ cat.name }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <!--end::Category-->
+
+                                <!--begin::Plan-->
+                                <div class="row mb-6">
+                                    <label class="col-lg-3 col-form-label fw-semibold fs-6 required">Plan</label>
+                                    <div class="col-lg-9">
+                                        <select name="planId"
+                                            id="plan_select"
+                                            class="form-select form-select-solid form-select-lg"
+                                            data-control="select2"
+                                            data-placeholder="Select plan"
+                                            data-selected-id="{{ subscription.plan.id if subscription and subscription.plan else '' }}"
+                                            required>
+                                            <option value="">Select plan</option>
+                                            {# initial plans will be overridden by AJAX #}
+                                            {% for plan in plans %}
+                                                <option value="{{ plan.id }}"
+                                                {% if subscription and subscription.plan and subscription.plan.id == plan.id %}selected{% endif %}>
+                                                    {{ plan.name }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                        <div id="field-error-planId" class="fv-plugins-message-container invalid-feedback"></div>
+                                    </div>
+                                </div>
+                                <!--end::Plan-->
+
+                                <!--begin::Date Range-->
+                                <div class="row mb-6">
+                                    <label class="col-lg-3 col-form-label required fw-semibold fs-6">Subscription Period</label>
+                                    <div class="col-lg-9">
+                                        <div class="row g-3">
+                                            <div class="col-md-6">
+                                                <label class="form-label fs-7 fw-semibold">Start Date</label>
+                                                <input type="text" 
+                                                       id="start_date_picker"
+                                                       name="startDate" 
+                                                       class="form-control form-control-lg form-control-solid" 
+                                                       placeholder="Select start date"
+                                                       value="{{ formatDateInTimezone(subscription.startDate, 'Asia/Dubai', 'yyyy-MM-dd') if subscription else '' }}" 
+                                                       required
+                                                       readonly/>
+                                                <div id="field-error-startDate" class="fv-plugins-message-container invalid-feedback"></div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label fs-7 fw-semibold">End Date</label>
+                                                <input type="text" 
+                                                       id="end_date_picker"
+                                                       name="endDate" 
+                                                       class="form-control form-control-lg form-control-solid" 
+                                                       placeholder="Select end date"
+                                                       value="{{ formatDateInTimezone(subscription.endDate, 'Asia/Dubai', 'yyyy-MM-dd') if subscription else '' }}" 
+                                                       required
+                                                       readonly/>
+                                                <div id="field-error-endDate" class="fv-plugins-message-container invalid-feedback"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end::Date Range-->
+
+                                <!--begin::Meal Types-->
+                                <div class="row mb-6">
+                                    <label class="col-lg-3 col-form-label required fw-semibold fs-6">Meal Types</label>
+                                    <div class="col-lg-9">
+                                        <div class="mb-6">
+                                            {% set selectedMealTypes = [] %}
+                                            {% if subscription and subscription.subscriptionMealTypes %}
+                                                {% for mt in subscription.subscriptionMealTypes %}
+                                                    {% set selectedMealTypes = (selectedMealTypes.push(mt.mealType.id), selectedMealTypes) %}
+                                                {% endfor %}
+                                            {% endif %}
+
+                                            <select class="form-select form-select-solid"
+                                                    data-control="select2"
+                                                    multiple
+                                                    name="mealTypes[]"
+                                                    data-close-on-select="false"
+                                                    data-placeholder="Select meal types">
+
+                                                {% for mt in mealTypes %}
+                                                    <option value="{{ mt.id }}"
+                                                        {% if mt.id in selectedMealTypes %}selected{% endif %}>
+                                                        {{ mt.name }}
+                                                    </option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                        <div id="field-error-mealTypes" class="fv-plugins-message-container invalid-feedback"></div>
+                                        <div class="form-text">Select at least one meal type</div>
+                                    </div>
+                                </div>
+                                <!--end::Meal Types-->
+
+                                <!--begin::Status-->
+                                <div class="row mb-6">
+                                    <label class="col-lg-3 col-form-label required fw-semibold fs-6">Status</label>
+                                    <div class="col-lg-9">
+                                        <select name="status" class="form-select form-select-solid form-select-lg" 
+                                                data-control="select2" 
+                                                data-hide-search="true"
+                                                required>
+                                            {% for status in statusOptions %}
+                                                <option value="{{ status }}" 
+                                                    {% if subscription and subscription.status == status %}selected{% endif %}>
+                                                    {{ status | capitalize }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                        <div id="field-error-status" class="fv-plugins-message-container invalid-feedback"></div>
+                                    </div>
+                                </div>
+
+                                <!--end::Status-->
+
+                                <!--begin::Notes-->
+                                <div class="row mb-6">
+                                    <label class="col-lg-3 col-form-label fw-semibold fs-6">Notes</label>
+                                    <div class="col-lg-9">
+                                        <textarea name="notes" 
+                                                  class="form-control form-control-lg form-control-solid" 
+                                                  rows="4" 
+                                                  placeholder="Add any additional notes or special instructions"
+                                                  maxlength="500">{{ subscription.notes if subscription else '' }}</textarea>
+                                        <div class="form-text">Maximum 500 characters</div>
+                                        <div id="field-error-notes" class="fv-plugins-message-container invalid-feedback"></div>
+                                    </div>
+                                </div>
+                                <!--end::Notes-->
+                            </div>
+
+                            <div class="card-footer d-flex justify-content-end py-6 px-9">
+                                <a href="/admin/subscription" class="btn btn-light btn-active-light-primary me-2">Cancel</a>
+                                <button type="submit" class="btn btn-primary form-submit-btn" id="kt_subscription_submit">
+                                    <span class="indicator-label label">
+                                        <i class="bi bi-save me-2"></i>
+                                        {% if subscription %}Update{% else %}Create{% endif %} Subscription
+                                    </span>
+                                    <span class="preloader indicator-progress d-none">Please wait...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!--end::Content-->
+        </div>
+
+        <!--begin::Footer-->
+        {% include '../partials/_footer-panel.njk' %}
+        <!--end::Footer-->
+    </div>
+{% endblock %}
+
+{% block customScript %}
+    <script src="/admin/custom/subscription-form.js"></script>
+    <script src="/admin/common/es-form.js"></script>
+    <script src="/admin/common/form-data-json.min.js"></script>
+{% endblock %}

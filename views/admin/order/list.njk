@@ -1,0 +1,151 @@
+{% extends "../layouts/master.njk" %}
+
+{% block container %}
+    <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+        <div class="d-flex flex-column flex-column-fluid">
+            <!--begin::Toolbar-->
+            <div id="kt_app_toolbar" class="app-toolbar pt-2 pt-lg-10">
+                <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex align-items-stretch">
+                    <div class="app-toolbar-wrapper d-flex flex-stack flex-wrap gap-4 w-100">
+                        <div class="page-title d-flex flex-column justify-content-center gap-1 me-3">
+                            <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bold fs-3 m-0">
+                                All Orders
+                            </h1>
+                            <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0">
+                                <li class="breadcrumb-item text-muted">
+                                    <a href="/admin/dashboard" class="text-muted text-hover-primary">Home</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <span class="bullet bg-gray-500 w-5px h-2px"></span>
+                                </li>
+                                <li class="breadcrumb-item text-muted">Orders</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end::Toolbar-->
+
+            <!--begin::Content-->
+            <div id="kt_app_content" class="app-content flex-column-fluid">
+                <div id="kt_app_content_container" class="app-container container-fluid">
+                    <div class="card card-flush">
+                        <!--begin::Card header-->
+                        <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+                            <div class="card-title">
+                                <div class="d-flex align-items-center position-relative my-1">
+                                    <i class="ki-outline ki-magnifier fs-3 position-absolute ms-4"></i>
+                                    <input type="text" 
+                                           data-kt-order-filter="search" 
+                                           class="form-control form-control-solid w-250px ps-12" 
+                                           placeholder="Search order, customer, code, mobile..."/>
+                                </div>
+                            </div>
+
+                            <div class="card-toolbar flex-row-fluid justify-content-end gap-3">
+                                <div class="d-flex flex-wrap align-items-center gap-3">
+                                    <!--begin::Date Navigation-->
+                                    <div class="btn-group">
+                                        <button type="button" id="prev_day_btn" class="btn btn-sm btn-light-primary">
+                                            <i class="ki-outline ki-arrow-left fs-3"></i>
+                                        </button>
+                                        <button type="button" id="today_btn" class="btn btn-sm btn-primary">
+                                            <i class="ki-outline ki-calendar-tick fs-3 me-1"></i> Today
+                                        </button>
+                                        <button type="button" id="next_day_btn" class="btn btn-sm btn-light-primary">
+                                            <i class="ki-outline ki-arrow-right fs-3"></i>
+                                        </button>
+                                    </div>
+                                    <!--end::Date Navigation-->
+
+                                    <!--begin::Date Range filter-->
+                                    <div class="mw-200px">
+                                        <input type="text" 
+                                               id="date_range_filter" 
+                                               class="form-control form-control-solid"
+                                               placeholder="Select date range"
+                                               readonly/>
+                                    </div>
+                                    <!--end::Date Range filter-->
+
+                                    <!--begin::Customer filter-->
+                                    <div class="mw-200px">
+                                        <select id="order_customer_filter" 
+                                                class="form-select form-select-solid"
+                                                data-control="select2"
+                                                data-placeholder="Filter by Customer">
+                                            <option value="">All Customers</option>
+                                        </select>
+                                    </div>
+                                    <!--end::Customer filter-->
+
+                                    <!--begin::Status filter-->
+                                    <div class="mw-150px">
+                                        <select id="order_status_filter"
+                                                class="form-select form-select-solid"
+                                                data-control="select2"
+                                                data-hide-search="true">
+                                            <option value="">All Status</option>
+                                            <option value="CONFIRMED">Confirmed</option>
+                                            <option value="DELIVERED">Delivered</option>
+                                            <option value="CANCELLED">Cancelled</option>
+                                        </select>
+                                    </div>
+                                    <!--end::Status filter-->
+
+                                    <!--begin::Clear filter-->
+                                    <button id="order_customer_clear" 
+                                            class="btn btn-icon btn-light" 
+                                            title="Clear filter">
+                                        <span class="svg-icon svg-icon-2">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <rect opacity="0.5" x="7.05025" y="15.5356" width="12" height="2" rx="1" transform="rotate(-45 7.05025 15.5356)" fill="currentColor"/>
+                                                <rect x="8.46447" y="7.05029" width="12" height="2" rx="1" transform="rotate(45 8.46447 7.05029)" fill="currentColor"/>
+                                            </svg>
+                                        </span>
+                                    </button>
+                                    <!--end::Clear filter-->
+                                </div>
+
+                                {# <a href="/admin/order/add" class="btn btn-primary">
+                                    <i class="ki-outline ki-plus fs-2"></i>
+                                    Add Order
+                                </a> #}
+                            </div>
+                        </div>
+                        <!--end::Card header-->
+
+                        <!--begin::Card body-->
+                        <div class="card-body pt-0">
+                            <table class="table align-middle table-row-dashed fs-6 gy-5" id="order_table">
+                                <thead>
+                                    <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+                                        <th class="min-w-120px">Order Number</th>
+                                        <th class="min-w-180px">Customer</th>
+                                        <th class="min-w-120px">Order Date</th>
+                                        <th class="min-w-150px">Category/Plan</th>
+                                        {# <th class="min-w-100px">Amount</th> #}
+                                        <th class="min-w-80px">Status</th>
+                                        <th class="min-w-80px">Items</th>
+                                        <th class="text-center min-w-100px">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="fw-semibold text-gray-600"></tbody>
+                            </table>
+                        </div>
+                        <!--end::Card body-->
+                    </div>
+                </div>
+            </div>
+            <!--end::Content-->
+        </div>
+
+        <!--begin::Footer-->
+        {% include '../partials/_footer-panel.njk' %}
+        <!--end::Footer-->
+    </div>
+{% endblock %}
+
+{% block customScript %}
+    <script src="/admin/custom/order-list.js"></script>
+{% endblock %}

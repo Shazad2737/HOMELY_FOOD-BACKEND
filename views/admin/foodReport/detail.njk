@@ -1,0 +1,277 @@
+{% extends "../layouts/master.njk" %}
+
+{% block container %}
+    <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+        <div class="d-flex flex-column flex-column-fluid">
+            <!--begin::Toolbar-->
+            <div id="kt_app_toolbar" class="app-toolbar pt-2 pt-lg-10">
+                <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex align-items-stretch">
+                    <div class="app-toolbar-wrapper d-flex flex-stack flex-wrap gap-4 w-100">
+                        <div class="page-title d-flex flex-column justify-content-center gap-1 me-3">
+                            <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bold fs-3 m-0">
+                                Food Item Details
+                            </h1>
+                            <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0">
+                                <li class="breadcrumb-item text-muted">
+                                    <a href="/admin/dashboard" class="text-muted text-hover-primary">Home</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <span class="bullet bg-gray-500 w-5px h-2px"></span>
+                                </li>
+                                <li class="breadcrumb-item text-muted">
+                                    <a href="/admin/order/food-count" class="text-muted text-hover-primary">Food Item Count</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <span class="bullet bg-gray-500 w-5px h-2px"></span>
+                                </li>
+                                <li class="breadcrumb-item text-muted">Details</li>
+                            </ul>
+                        </div>
+
+                        <div class="d-flex align-items-center gap-2">
+                            <a href="/admin/order/food-count" class="btn btn-sm btn-light">
+                                <i class="ki-outline ki-arrow-left fs-3"></i>
+                                Back to List
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end::Toolbar-->
+
+            <!--begin::Content-->
+            <div id="kt_app_content" class="app-content flex-column-fluid">
+                <div id="kt_app_content_container" class="app-container container-fluid">
+
+                    <!--begin::Food Item Overview-->
+                    <div class="card mb-5 mb-xl-10">
+                        <div class="card-body pt-9 pb-0">
+                            <div class="d-flex flex-wrap flex-sm-nowrap mb-6">
+                                <!--begin::Image-->
+                                <div class="d-flex flex-center flex-shrink-0 bg-light rounded w-100px h-100px w-lg-150px h-lg-150px me-7 mb-4">
+                                    <img id="food_image" src="" alt="Food Item" class="mw-100 mh-100" style="display: none;">
+                                    <i id="food_icon" class="ki-outline ki-burger-menu fs-5x text-gray-500"></i>
+                                </div>
+                                <!--end::Image-->
+
+                                <!--begin::Info-->
+                                <div class="flex-grow-1">
+                                    <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
+                                        <div class="d-flex flex-column">
+                                            <div class="d-flex align-items-center mb-2">
+                                                <span class="text-gray-900 fs-2 fw-bold me-3" id="food_name">Loading...</span>
+                                                <span class="badge badge-light-primary fs-7" id="food_code"></span>
+                                            </div>
+
+                                            <div class="mb-3" id="food_description_container" style="display: none;">
+                                                <span class="text-gray-600 fs-6" id="food_description"></span>
+                                            </div>
+
+                                            <div class="d-flex flex-wrap fw-semibold fs-6 mb-4 pe-2">
+                                                <span class="d-flex align-items-center text-gray-500 me-5 mb-2">
+                                                    <i class="ki-outline ki-calendar fs-4 me-1"></i>
+                                                    <span id="selected_date"></span>
+                                                </span>
+                                                <span class="d-flex align-items-center text-gray-500 me-5 mb-2">
+                                                    <i class="ki-outline ki-time fs-4 me-1"></i>
+                                                    <span id="meal_type_name"></span>
+                                                </span>
+                                                <span class="d-flex align-items-center text-gray-500 mb-2">
+                                                    <i class="ki-outline ki-category fs-4 me-1"></i>
+                                                    <span id="category_name"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--begin::Stats-->
+                                    <div class="d-flex flex-wrap">
+                                        <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                            <div class="d-flex align-items-center">
+                                                <i class="ki-outline ki-abstract-26 fs-3 text-success me-2"></i>
+                                                <div class="fs-2 fw-bold" id="total_orders">0</div>
+                                            </div>
+                                            <div class="fw-semibold fs-6 text-gray-500">Total Orders</div>
+                                        </div>
+                                        <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                            <div class="d-flex align-items-center">
+                                                <i class="ki-outline ki-profile-user fs-3 text-primary me-2"></i>
+                                                <div class="fs-2 fw-bold" id="total_customers">0</div>
+                                            </div>
+                                            <div class="fw-semibold fs-6 text-gray-500">Customers</div>
+                                        </div>
+                                        <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mb-3">
+                                            <div class="d-flex align-items-center">
+                                                <i class="ki-outline ki-geolocation fs-3 text-warning me-2"></i>
+                                                <div class="fs-2 fw-bold" id="total_locations">0</div>
+                                            </div>
+                                            <div class="fw-semibold fs-6 text-gray-500">Locations</div>
+                                        </div>
+                                    </div>
+                                    <!--end::Stats-->
+                                </div>
+                                <!--end::Info-->
+                            </div>
+
+                            <!--begin::Nav-->
+                            <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
+                                <li class="nav-item mt-2">
+                                    <a class="nav-link text-active-primary ms-0 me-10 py-5 active" data-bs-toggle="tab" href="#orders_tab">
+                                        Orders
+                                    </a>
+                                </li>
+                                <li class="nav-item mt-2">
+                                    <a class="nav-link text-active-primary ms-0 me-10 py-5" data-bs-toggle="tab" href="#customers_tab">
+                                        Customers
+                                    </a>
+                                </li>
+                                <li class="nav-item mt-2">
+                                    <a class="nav-link text-active-primary ms-0 me-10 py-5" data-bs-toggle="tab" href="#analytics_tab">
+                                        Analytics
+                                    </a>
+                                </li>
+                            </ul>
+                            <!--end::Nav-->
+                        </div>
+                    </div>
+                    <!--end::Food Item Overview-->
+
+                    <!--begin::Tab Content-->
+                    <div class="tab-content">
+                        <!--begin::Orders Tab-->
+                        <div class="tab-pane fade show active" id="orders_tab">
+                            <div class="card">
+                                <div class="card-header border-0 pt-6">
+                                    <div class="card-title">
+                                        <div class="d-flex align-items-center position-relative my-1">
+                                            <i class="ki-outline ki-magnifier fs-3 position-absolute ms-5"></i>
+                                            <input type="text" id="order_search" class="form-control form-control-solid w-250px ps-13" placeholder="Search orders...">
+                                        </div>
+                                    </div>
+                                    <div class="card-toolbar">
+                                        <button type="button" class="btn btn-sm btn-light-primary" id="export_orders_btn">
+                                            <i class="ki-outline ki-exit-down fs-2"></i>
+                                            Export Orders
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="card-body pt-0">
+                                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="orders_table">
+                                        <thead>
+                                            <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+                                                <th class="min-w-100px">Order #</th>
+                                                <th class="min-w-150px">Customer</th>
+                                                <th class="min-w-100px">Plan</th>
+                                                <th class="min-w-150px">Delivery Location</th>
+                                                <th class="min-w-100px">Status</th>
+                                                {# <th class="min-w-80px">Qty</th> #}
+                                                <th class="text-end min-w-100px">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="fw-semibold text-gray-600"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Orders Tab-->
+
+                        <!--begin::Customers Tab-->
+                        <div class="tab-pane fade" id="customers_tab">
+                            <div class="card">
+                                <div class="card-header border-0 pt-6">
+                                    <div class="card-title">
+                                        <span class="card-label fw-bold fs-3 mb-1">Customer Distribution</span>
+                                    </div>
+                                </div>
+                                <div class="card-body pt-0">
+                                    <div class="table-responsive">
+                                        <table class="table align-middle table-row-dashed fs-6 gy-5" id="customers_table">
+                                            <thead>
+                                                <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+                                                    <th class="min-w-200px">Customer</th>
+                                                    <th class="min-w-100px">Orders</th>
+                                                    <th class="min-w-100px">Plan</th>
+                                                    <th class="min-w-150px">Primary Location</th>
+                                                    <th class="text-end min-w-100px">Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="fw-semibold text-gray-600"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Customers Tab-->
+
+                        <!--begin::Analytics Tab-->
+                        <div class="tab-pane fade" id="analytics_tab">
+                            <div class="row g-5 g-xl-10">
+                                <!--begin::Plan Distribution-->
+                                <div class="col-xl-6">
+                                    <div class="card card-flush h-xl-100">
+                                        <div class="card-header pt-7">
+                                            <h3 class="card-title align-items-start flex-column">
+                                                <span class="card-label fw-bold text-gray-800">Plan Distribution</span>
+                                                <span class="text-gray-500 mt-1 fw-semibold fs-6">Orders by plan type</span>
+                                            </h3>
+                                        </div>
+                                        <div class="card-body pt-6">
+                                            <div id="plan_distribution_chart"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end::Plan Distribution-->
+
+                                <!--begin::Location Distribution-->
+                                <div class="col-xl-6">
+                                    <div class="card card-flush h-xl-100">
+                                        <div class="card-header pt-7">
+                                            <h3 class="card-title align-items-start flex-column">
+                                                <span class="card-label fw-bold text-gray-800">Top Locations</span>
+                                                <span class="text-gray-500 mt-1 fw-semibold fs-6">Most popular delivery areas</span>
+                                            </h3>
+                                        </div>
+                                        <div class="card-body pt-6">
+                                            <div id="location_list"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end::Location Distribution-->
+
+                                <!--begin::Delivery Status-->
+                                <div class="col-xl-12">
+                                    <div class="card card-flush">
+                                        <div class="card-header pt-7">
+                                            <h3 class="card-title align-items-start flex-column">
+                                                <span class="card-label fw-bold text-gray-800">Delivery Status</span>
+                                                <span class="text-gray-500 mt-1 fw-semibold fs-6">Current delivery progress</span>
+                                            </h3>
+                                        </div>
+                                        <div class="card-body pt-6">
+                                            <div class="row g-5" id="delivery_status_cards">
+                                                <!-- Status cards will be inserted here -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end::Delivery Status-->
+                            </div>
+                        </div>
+                        <!--end::Analytics Tab-->
+                    </div>
+                    <!--end::Tab Content-->
+
+                </div>
+            </div>
+            <!--end::Content-->
+        </div>
+
+        <!--begin::Footer-->
+        {% include '../partials/_footer-panel.njk' %}
+        <!--end::Footer-->
+    </div>
+{% endblock %}
+
+{% block customScript %}
+    <script src="/admin/custom/food-report-detail.js"></script>
+{% endblock %}

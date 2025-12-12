@@ -1,0 +1,166 @@
+{% extends "../layouts/master.njk" %}
+{% block container %}
+    <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+        <div
+            class="d-flex flex-column flex-column-fluid">
+            <!--begin::Toolbar-->
+            <div id="kt_app_toolbar" class="app-toolbar pt-2 pt-lg-10">
+                <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex align-items-stretch">
+                    <div class="app-toolbar-wrapper d-flex flex-stack flex-wrap gap-4 w-100">
+                        <div class="page-title d-flex flex-column justify-content-center gap-1 me-3">
+                            <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bold fs-3 m-0">
+                                {% if category %}Edit{% else %}Add{% endif %}
+                                Category
+                            </h1>
+                            <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0">
+                                <li class="breadcrumb-item text-muted">
+                                    <a href="/admin/dashboard" class="text-muted text-hover-primary">Home</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <span class="bullet bg-gray-500 w-5px h-2px"></span>
+                                </li>
+                                <li class="breadcrumb-item text-muted">
+                                    <a href="/admin/category" class="text-muted text-hover-primary">Categories</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <span class="bullet bg-gray-500 w-5px h-2px"></span>
+                                </li>
+                                <li class="breadcrumb-item text-muted">
+                                    {% if category %}Edit{% else %}Add{% endif %}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end::Toolbar-->
+            <!--begin::Content-->
+            <div id="kt_app_content" class="app-content flex-column-fluid">
+                <div id="kt_app_content_container" class="app-container container-fluid">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Category Information</h3>
+                        </div>
+                        <form
+                            id="kt_category_form"
+                            action="/admin/category/save"
+                            data-redirect-url="/admin/category/"
+                            method="POST"
+                            class="es-form"
+                            novalidate="novalidate">
+                            <input type="hidden" name="id" value="{{ category.id }}">
+                                <input type="hidden" name="selectAllAreas" id="selectAllAreasHidden" value="false">
+                                    <div class="card-body">
+                                        <div class="row mb-6">
+                                            <label class="col-lg-3 col-form-label required fw-semibold fs-6">Category Name</label>
+                                            <div class="col-lg-9">
+                                                <input type="text" name="name" class="form-control form-control-lg form-control-solid" placeholder="Enter category name" value="{{ category.name if category else '' }}" required/>
+                                                <div id="field-error-name" class="fv-plugins-message-container invalid-feedback"></div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-6">
+                                            <label class="col-lg-3 col-form-label fw-semibold fs-6">Description</label>
+                                            <div class="col-lg-9">
+                                                <textarea
+                                                    name="description"
+                                                    class="form-control form-control-lg form-control-solid"
+                                                    rows="3"
+                                                    placeholder="Enter category description">{{ category.description if category else '' }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-6">
+                                            <label class="col-lg-3 col-form-label fw-semibold fs-6 required">Areas</label>
+                                            <div
+                                                class="col-lg-9">
+                                                <!-- Select All Checkbox -->
+                                                <div class="form-check form-check-custom form-check-solid mb-3">
+                                                    <input class="form-check-input" type="checkbox" id="selectAllAreasCheckbox"/>
+                                                    <label class="form-check-label fw-semibold text-gray-700" for="selectAllAreasCheckbox">
+                                                        Select All Areas
+                                                    </label>
+                                                </div>
+                                                <select
+                                                    class="form-select form-select-solid"
+                                                    data-control="select2"
+                                                    data-placeholder="Select areas"
+                                                    data-allow-clear="true"
+                                                    multiple="multiple"
+                                                    data-close-on-select="false"
+                                                    name="areas[]"
+                                                    id="category_areas"
+                                                    required>
+                                                    <option></option>
+                                                    {% for area in areas %}
+                                                        <option value="{{ area.id }}" {% if category and category.CategoryLocation %} {% for cl in category.CategoryLocation %} {% if cl.areaId == area.id %} selected {% endif %} {% endfor %} {% endif %}>
+                                                            {{ area.name }}
+                                                            {% if area.location %}
+                                                                ({{ area.location.name }}){% endif %}
+                                                        </option>
+                                                    {% endfor %}
+                                                </select>
+                                                <div class="form-text">Select one or more areas for this category, or select all</div>
+                                                <div id="field-error-areas" class="fv-plugins-message-container invalid-feedback"></div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-6">
+                                            <label class="col-lg-3 col-form-label fw-semibold fs-6">Sort Order</label>
+                                            <div class="col-lg-9">
+                                                <input type="number" name="sortOrder" class="form-control form-control-lg form-control-solid" placeholder="0" value="{{ category.sortOrder if category else 0 }}" min="0"/>
+                                                <div class="form-text">Lower numbers appear first</div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-6">
+                                            <label class="col-lg-3 col-form-label fw-semibold fs-6 required">Category Image</label>
+                                            <div class="col-lg-9">
+                                                <div class="card card-flush mb-4">
+                                                    <div class="card-body text-center">
+                                                        <div class="dropzone dropzone-single" id="categoryImageDropzone">
+                                                            <div class="dz-message needsclick">
+                                                                <i class="ki-outline ki-file-up text-primary fs-3x"></i>
+                                                                <div class="ms-4">
+                                                                    <h3 class="fs-5 fw-bold text-gray-900 mb-1">
+                                                                        Drop category image here or click to upload.
+                                                                    </h3>
+                                                                    <span class="fs-7 fw-semibold text-gray-500">
+                                                                        Only one image allowed
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Hidden input for storing uploaded image URL -->
+                                                        <input type="hidden" name="imageUrl" id="categoryImageUrl" value="{{ category and category.imageUrl or '' }}">
+                                                            <div id="field-error-imageUrl" class="fv-plugins-message-container invalid-feedback"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer d-flex justify-content-end py-6 px-9">
+                                            <a href="/admin/category" class="btn btn-light btn-active-light-primary me-2">Cancel</a>
+                                            <button type="submit" class="btn btn-primary form-submit-btn" id="submit_btn">
+                                                <span class="indicator-label label">
+                                                    {% if category %}Update{% else %}Create{% endif %}
+                                                    Category</span>
+                                                <span class="preloader indicator-progress d-nones">Please wait...
+                                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                                </span>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Content-->
+                    </div>
+                    <!--begin::Footer-->
+                    {% include '../partials/_footer-panel.njk' %}
+                    <!--end::Footer-->
+                </div>
+            {% endblock %}
+            {% block customScript %}
+                <script src="/admin/common/es-form.js"></script>
+                <script src="/admin/common/form-data-json.min.js"></script>
+                <script src="/admin/common/single-image-dropzone.js"></script>
+                <script src="/admin/custom/category-image-dropzone.js"></script>
+                <script src="/admin/custom/select-all-areas.js"></script>
+            {% endblock %}

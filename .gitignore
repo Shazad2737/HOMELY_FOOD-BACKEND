@@ -1,0 +1,46 @@
+# Node modules & build output
+node_modules/
+dist/
+build/
+
+# Environment files
+.env
+.env.*
+!.env.example  # keep sample env for reference
+
+# Prisma generated files
+/generated/
+generated/
+prisma/generated/
+prisma/migrations/dev.db
+prisma/dev.db
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Winston log files
+logs/*.log
+logs/**/*.log
+
+# System files
+.DS_Store
+Thumbs.db
+
+# IDEs & editors
+.vscode/
+.idea/
+
+# Logs (Winston, Morgan, App logs)
+logs/
+*.log
+logs/**/*.log
+logs/*.log
+logs/*
+
+# Winston rotate logs
+*.gz

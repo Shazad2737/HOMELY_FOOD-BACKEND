@@ -1,0 +1,54 @@
+import { envConfig } from '../config/env.js'
+import logger from '../src/utils/logger.js'
+import { twilioService } from './twilio.adaptor.js'
+import { smsCountryService } from './smsCountry.adaptor.js'
+
+class MessageServiceAdaptor {
+    constructor() {
+        this.provider = null
+        this.initializeProvider()
+    }
+
+    initializeProvider() {
+        const providerType = envConfig.general?.SMS_PROVIDER
+
+        switch (providerType.toUpperCase()) {
+            case 'TWILIO':
+                this.provider = twilioService
+                break
+            case 'SMSCOUNTRY':
+            case 'SMS_COUNTRY':
+                this.provider = smsCountryService
+                break
+            default:
+                this.provider = twilioService
+                logger.warn(
+                    `Unknown messaging provider: ${providerType}. Defaulting to Twilio.`
+                )
+        }
+
+        logger.info(
+            `✅ Message Service Adaptor initialized with provider: ${providerType}`
+        )
+    }
+
+    generateOTP() {
+        if (!this.provider || !this.provider.generateOTP) {
+            throw new Error('Message provider not properly configured')
+        }
+        return this.provider.generateOTP()
+    }
+
+    async sendOTP(mobile, otpCode) {
+        if (!this.provider || !this.provider.sendOTP) {
+            throw new Error('Message provider not properly configured')
+        }
+        return await this.provider.sendOTP(mobile, otpCode)
+    }
+
+    getProviderName() {
+        return envConfig.general?.SMS_PROVIDER
+    }
+}
+
+export const messageService = new MessageServiceAdaptor()

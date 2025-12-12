@@ -1,0 +1,239 @@
+{% extends "../layouts/master.njk" %}
+{% block container %}
+    <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+        <div
+            class="d-flex flex-column flex-column-fluid">
+            <!--begin::Toolbar-->
+            <div id="kt_app_toolbar" class="app-toolbar pt-2 pt-lg-10">
+                <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex align-items-stretch">
+                    <div class="app-toolbar-wrapper d-flex flex-stack flex-wrap gap-4 w-100">
+                        <div class="page-title d-flex flex-column justify-content-center gap-1 me-3">
+                            <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bold fs-3 m-0">
+                                Order Report
+                            </h1>
+                            <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0">
+                                <li class="breadcrumb-item text-muted">
+                                    <a href="/admin/dashboard" class="text-muted text-hover-primary">Home</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <span class="bullet bg-gray-500 w-5px h-2px"></span>
+                                </li>
+                                <li class="breadcrumb-item text-muted">Reports</li>
+                                <li class="breadcrumb-item">
+                                    <span class="bullet bg-gray-500 w-5px h-2px"></span>
+                                </li>
+                                <li class="breadcrumb-item text-muted">Order Report</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end::Toolbar-->
+            <!--begin::Content-->
+            <div id="kt_app_content" class="app-content flex-column-fluid">
+                <div id="kt_app_content_container" class="app-container container-fluid">
+                    <div
+                        class="card card-flush">
+                        <!--begin::Card header-->
+                        <div class="card-header align-items-center py-5">
+                            <div class="card-toolbar flex-row-fluid justify-content-between gap-3">
+
+                                <!--begin::Left Filters-->
+                                <div class="d-flex flex-wrap align-items-center gap-3">
+
+                                    <!--begin::Date Navigation-->
+                                    <div class="btn-group">
+                                        <button type="button" id="prev_day_btn" class="btn btn-sm btn-light-primary">
+                                            <i class="ki-outline ki-arrow-left fs-3"></i>
+                                        </button>
+                                        <button type="button" id="today_btn" class="btn btn-sm btn-primary">
+                                            <i class="ki-outline ki-calendar-tick fs-3 me-1"></i> Today
+                                        </button>
+                                        <button type="button" id="next_day_btn" class="btn btn-sm btn-light-primary">
+                                            <i class="ki-outline ki-arrow-right fs-3"></i>
+                                        </button>
+                                    </div>
+                                    <!--end::Date Navigation-->
+
+                                    <!--begin::Date Range-->
+                                    <div class="mw-200px">
+                                        <input type="text"
+                                            id="date_range_filter"
+                                            class="form-control form-control-solid"
+                                            placeholder="Select date range"
+                                            readonly>
+                                    </div>
+                                    <!--end::Date Range-->
+
+                                    <!--begin::Customer-->
+                                    <div class="mw-200px">
+                                        <select id="customer_filter"
+                                                class="form-select form-select-solid"
+                                                data-control="select2"
+                                                data-placeholder="Select Customer">
+                                            <option></option>
+                                            <option value="0">All Customers</option>
+                                        </select>
+                                    </div>
+                                    <!--end::Customer-->
+
+                                    <!--begin::Status-->
+                                    <div class="mw-150px">
+                                        <select id="status_filter"
+                                                class="form-select form-select-solid"
+                                                data-control="select2"
+                                                data-hide-search="true"
+                                                data-placeholder="Status">
+                                            <option></option>
+                                            <option value="0">All Status</option>
+                                            <option value="CONFIRMED">Confirmed</option>
+                                            <option value="DELIVERED">Delivered</option>
+                                            <option value="CANCELLED">Cancelled</option>
+                                        </select>
+                                    </div>
+                                    <!--end::Status-->
+
+                                    <!--begin::Category-->
+                                    <div class="mw-150px">
+                                        <select id="category_filter"
+                                                class="form-select form-select-solid"
+                                                data-control="select2"
+                                                data-hide-search="true"
+                                                data-placeholder="Category">
+                                            <option></option>
+                                            <option value="0">All Categories</option>
+                                        </select>
+                                    </div>
+                                    <!--end::Category-->
+
+                                    <!--begin::Plan-->
+                                    <div class="mw-150px">
+                                        <select id="plan_filter"
+                                                class="form-select form-select-solid"
+                                                data-control="select2"
+                                                data-hide-search="true"
+                                                data-placeholder="Plan">
+                                            <option></option>
+                                            <option value="0">All Plans</option>
+                                        </select>
+                                    </div>
+                                    <!--end::Plan-->
+
+                                    <!--begin::Clear-->
+                                    <button id="order_customer_clear"
+                                            class="btn btn-icon btn-light"
+                                            title="Clear filter">
+                                        <span class="svg-icon svg-icon-2">
+                                            <svg width="24" height="24" fill="none">
+                                                <rect opacity="0.5" x="7.05" y="15.53" width="12" height="2" rx="1" transform="rotate(-45 7.05 15.53)" fill="currentColor"/>
+                                                <rect x="8.46" y="7.05" width="12" height="2" rx="1" transform="rotate(45 8.46 7.05)" fill="currentColor"/>
+                                            </svg>
+                                        </span>
+                                    </button>
+                                    <!--end::Clear-->
+
+                                </div>
+                                <!--end::Left Filters-->
+
+                                <!--begin::Right Actions-->
+                                <div class="d-flex align-items-center gap-2 flex-shrink-0">
+
+                                    <!--begin::Export Excel-->
+                                    <button id="export_btn"
+                                            class="btn btn-sm btn-light-success"
+                                            title="Export Excel">
+                                        <i class="ki-outline ki-exit-down fs-2"></i>
+                                    </button>
+                                    <!--end::Export Excel-->
+
+                                    <!--begin::Refresh-->
+                                    <button id="refresh_btn"
+                                            class="btn btn-sm btn-light"
+                                            title="Refresh">
+                                        <i class="ki-outline ki-arrows-circle fs-2"></i>
+                                    </button>
+                                    <!--end::Refresh-->
+
+                                </div>
+                                <!--end::Right Actions-->
+                            </div>
+                        </div>
+
+                        <!--end::Card header-->
+                        <!--begin::Card body-->
+                        <div
+                            class="card-body pt-0">
+                            <!--begin::Summary-->
+                            <div class="row g-5 mb-7">
+                                <div class="col-sm-6 col-xl-3">
+                                    <div class="card card-flush border border-dashed border-gray-300 h-100">
+                                        <div class="card-body text-center">
+                                            <i class="ki-outline ki-basket fs-2x text-primary mb-3"></i>
+                                            <div class="fs-6 text-gray-800 fw-bold">Total Orders</div>
+                                            <div class="fs-2hx fw-bold text-gray-900" id="total_orders">0</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-xl-3">
+                                    <div class="card card-flush border border-dashed border-gray-300 h-100">
+                                        <div class="card-body text-center">
+                                            <i class="ki-outline ki-check-circle fs-2x text-success mb-3"></i>
+                                            <div class="fs-6 text-gray-800 fw-bold">Active Orders</div>
+                                            <div class="fs-2hx fw-bold text-gray-900" id="active_orders">0</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-xl-3">
+                                    <div class="card card-flush border border-dashed border-gray-300 h-100">
+                                        <div class="card-body text-center">
+                                            <i class="ki-outline ki-cross-circle fs-2x text-danger mb-3"></i>
+                                            <div class="fs-6 text-gray-800 fw-bold">Cancelled Orders</div>
+                                            <div class="fs-2hx fw-bold text-gray-900" id="cancelled_orders">0</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-xl-3">
+                                    <div class="card card-flush border border-dashed border-gray-300 h-100">
+                                        <div class="card-body text-center">
+                                            <i class="ki-outline ki-burger-menu-3 fs-2x text-info mb-3"></i>
+                                            <div class="fs-6 text-gray-800 fw-bold">Total Items</div>
+                                            <div class="fs-2hx fw-bold text-gray-900" id="total_items">0</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::Summary-->
+                            <!--begin::Table-->
+                            <table class="table align-middle table-row-dashed fs-6 gy-5" id="order_report_table">
+                                <thead>
+                                    <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+                                        <th class="min-w-125px">Order Number</th>
+                                        <th class="min-w-100px">Order Date</th>
+                                        <th class="min-w-150px">Customer</th>
+                                        <th class="min-w-100px">Category</th>
+                                        <th class="min-w-100px">Plan</th>
+                                        <th class="min-w-120px">Product</th>
+                                        <th class="min-w-100px">Meal Type</th>
+                                        <th class="min-w-150px">Delivery Location</th>
+                                        <th class="min-w-80px text-center">Status</th>
+                                        <th class="min-w-100px text-end">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="fw-semibold text-gray-600"></tbody>
+                            </table>
+                            <!--end::Table-->
+                        </div>
+                        <!--end::Card body-->
+                    </div>
+                </div>
+            </div>
+            <!--end::Content-->
+        </div>
+        <!--begin::Footer-->
+        {% include '../partials/_footer-panel.njk' %}
+        <!--end::Footer-->
+    </div>
+{% endblock %}
+{% block customScript %}
+    <script src="/admin/custom/order-report.js"></script>
+{% endblock %}

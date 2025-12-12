@@ -1,0 +1,585 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Country {
+  id               String             @id @default(cuid())
+  name             String             @unique
+  code             String             @unique
+  currency         String
+  timezone         String
+  isActive         Boolean            @default(true)
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  brands           Brand[]
+  CustomerLocation CustomerLocation[]
+  locations        Location[]
+
+  @@map("countries")
+}
+
+model Location {
+  id                  String             @id @default(cuid())
+  name                String
+  code                String             @unique
+  latitude            String?
+  longitude           String?
+  countryId           String
+  isActive            Boolean            @default(true)
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+  admins              Admin[]
+  areas               Area[]
+  brands              Brand[]
+  availableCategories CategoryLocation[]
+  CustomerLocation    CustomerLocation[]
+  foodItems           FoodItemLocation[]
+  country             Country            @relation(fields: [countryId], references: [id])
+
+  @@unique([countryId, name])
+  @@map("locations")
+}
+
+model Area {
+  id                String             @id @default(cuid())
+  name              String
+  locationId        String
+  latitude          String?
+  longitude         String?
+  isActive          Boolean            @default(true)
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  location          Location           @relation(fields: [locationId], references: [id])
+  brands            Brand[]
+  categoryLocations CategoryLocation[]
+  CustomerLocation  CustomerLocation[]
+  foodItemLocations FoodItemLocation[]
+
+  @@unique([locationId, name])
+  @@map("areas")
+}
+
+model Brand {
+  id            String                 @id @default(cuid())
+  name          String
+  code          String                 @unique
+  countryId     String
+  locationId    String?
+  areaId        String?
+  description   String?
+  logoUrl       String?
+  address       String?
+  contactEmail  String?
+  contactPhone  String?
+  isActive      Boolean                @default(true)
+  createdAt     DateTime               @default(now())
+  updatedAt     DateTime               @updatedAt
+  admins        Admin[]
+  Banner        Banner[]
+  brandSettings BrandSettings?
+  area          Area?                  @relation(fields: [areaId], references: [id])
+  country       Country                @relation(fields: [countryId], references: [id])
+  location      Location?              @relation(fields: [locationId], references: [id])
+  categories    Category[]
+  subscriptions CustomerSubscription[]
+  customers     Customer[]
+  Holiday       Holiday[]
+  notification  Notification[]
+
+  @@unique([countryId, code])
+  @@map("brands")
+}
+
+model Admin {
+  id         String    @id @default(cuid())
+  email      String    @unique
+  name       String
+  password   String
+  role       AdminRole @default(BRAND_ADMIN)
+  brandId    String?
+  locationId String?
+  isActive   Boolean   @default(true)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  brand      Brand?    @relation(fields: [brandId], references: [id])
+  location   Location? @relation(fields: [locationId], references: [id])
+
+  @@index([brandId, locationId])
+  @@map("admins")
+}
+
+model Customer {
+  id               String                 @id @default(cuid())
+  email            String?                @unique
+  mobile           String                 @unique
+  name             String
+  password         String
+  profileUrl       String?
+  customerCode     String                 @unique @default(cuid())
+  status           CustomerStatus         @default(INACTIVE)
+  isVerified       Boolean                @default(false)
+  brandId          String
+  createdAt        DateTime               @default(now())
+  updatedAt        DateTime               @updatedAt
+  locations        CustomerLocation[]
+  subscriptions    CustomerSubscription[]
+  brand            Brand                  @relation(fields: [brandId], references: [id])
+  notificationRead NotificationRead[]
+  notification     Notification[]
+  orders           Order[]
+
+  @@index([brandId])
+  @@index([mobile])
+  @@map("customers")
+}
+
+model CustomerLocation {
+  id           String               @id @default(cuid())
+  customerId   String
+  type         CustomerLocationType @default(HOME)
+  name         String?
+  roomNumber   String?
+  buildingName String?
+  zipCode      String?
+  mobile       String?
+  latitude     String?
+  longitude    String?
+  isDefault    Boolean              @default(false)
+  isDeleted    Boolean              @default(false)
+  countryId    String?
+  locationId   String?
+  areaId       String?
+  createdAt    DateTime             @default(now())
+  updatedAt    DateTime             @updatedAt
+  deletedAt    DateTime?
+  area         Area?                @relation(fields: [areaId], references: [id])
+  country      Country?             @relation(fields: [countryId], references: [id])
+  customer     Customer             @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  location     Location?            @relation(fields: [locationId], references: [id])
+  OrderItem    OrderItem[]
+
+  @@index([isDeleted])
+  @@index([customerId, locationId, areaId])
+  @@map("customer_locations")
+}
+
+model Category {
+  id                   String                 @id @default(cuid())
+  name                 String
+  description          String?
+  imageUrl             String
+  brandId              String
+  isActive             Boolean                @default(true)
+  sortOrder            Int                    @default(0)
+  createdAt            DateTime               @default(now())
+  updatedAt            DateTime               @updatedAt
+  brand                Brand                  @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  CategoryLocation     CategoryLocation[]
+  CustomerSubscription CustomerSubscription[]
+  FoodItem             FoodItem[]
+  Order                Order[]
+  plans                Plan[]
+
+  @@unique([brandId, name])
+  @@map("categories")
+}
+
+model CategoryLocation {
+  id         String    @id @default(cuid())
+  categoryId String
+  locationId String?
+  areaId     String
+  area       Area      @relation(fields: [areaId], references: [id])
+  category   Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  location   Location? @relation(fields: [locationId], references: [id])
+
+  @@unique([categoryId, areaId])
+  @@map("category_locations")
+}
+
+model Plan {
+  id            String                 @id @default(cuid())
+  name          String
+  type          PlanType
+  categoryId    String
+  description   String?
+  imageUrl      String
+  isActive      Boolean                @default(true)
+  isUnlimited   Boolean                @default(false)
+  sortOrder     Int                    @default(0)
+  createdAt     DateTime               @default(now())
+  updatedAt     DateTime               @updatedAt
+  subscriptions CustomerSubscription[]
+  FoodItemPlan  FoodItemPlan[]
+  Order         Order[]
+  category      Category               @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@unique([categoryId, type])
+  @@map("plans")
+}
+
+model MealType {
+  id                    String                 @id @default(cuid())
+  type                  MealTypeEnum           @unique
+  name                  String
+  description           String?
+  startTime             String
+  endTime               String
+  isActive              Boolean                @default(true)
+  sortOrder             Int                    @default(0)
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+  deliverWithItems      FoodItem[]             @relation("DeliverWithMealType")
+  foodItems             FoodItem[]             @relation("PrimaryMealType")
+  orderItems            OrderItem[]
+  subscriptionMealTypes SubscriptionMealType[]
+
+  @@map("meal_types")
+}
+
+model FoodItem {
+  id               String                 @id @default(cuid())
+  name             String
+  code             String
+  description      String?
+  imageUrl         String?
+  cuisine          String
+  style            String
+  price            Decimal?               @db.Decimal(10, 2)
+  isActive         Boolean                @default(true)
+  isVegetarian     Boolean                @default(true)
+  isVegan          Boolean                @default(false)
+  mealTypeId       String
+  categoryId       String
+  deliveryMode     DeliveryMode           @default(SEPARATE)
+  deliverWithId    String?
+  createdAt        DateTime               @default(now())
+  updatedAt        DateTime               @updatedAt
+  availableDays    FoodItemAvailability[]
+  locations        FoodItemLocation[]
+  planAvailability FoodItemPlan[]
+  category         Category               @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  deliverWith      MealType?              @relation("DeliverWithMealType", fields: [deliverWithId], references: [id])
+  mealType         MealType               @relation("PrimaryMealType", fields: [mealTypeId], references: [id])
+  orderItems       OrderItem[]
+
+  @@unique([code, mealTypeId])
+  @@map("food_items")
+}
+
+model FoodItemLocation {
+  foodItemId String
+  locationId String?
+  areaId     String
+  area       Area      @relation(fields: [areaId], references: [id])
+  foodItem   FoodItem  @relation(fields: [foodItemId], references: [id])
+  location   Location? @relation(fields: [locationId], references: [id])
+
+  @@id([foodItemId, areaId])
+  @@map("food_item_locations")
+}
+
+model FoodItemAvailability {
+  id         String    @id @default(cuid())
+  foodItemId String
+  dayOfWeek  DayOfWeek
+  foodItem   FoodItem  @relation(fields: [foodItemId], references: [id], onDelete: Cascade)
+
+  @@unique([foodItemId, dayOfWeek])
+  @@map("food_item_availability")
+}
+
+model FoodItemPlan {
+  id         String   @id @default(cuid())
+  foodItemId String
+  planId     String
+  foodItem   FoodItem @relation(fields: [foodItemId], references: [id], onDelete: Cascade)
+  plan       Plan     @relation(fields: [planId], references: [id])
+
+  @@unique([foodItemId, planId])
+  @@map("food_item_plan_types")
+}
+
+model CustomerSubscription {
+  id                    String                 @id @default(cuid())
+  customerId            String
+  brandId               String
+  planId                String
+  categoryId            String
+  startDate             DateTime
+  endDate               DateTime
+  status                SubscriptionStatus     @default(ACTIVE)
+  createdBy             String?
+  notes                 String?
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+  brand                 Brand                  @relation(fields: [brandId], references: [id])
+  category              Category               @relation(fields: [categoryId], references: [id])
+  customer              Customer               @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  plan                  Plan                   @relation(fields: [planId], references: [id])
+  orders                Order[]
+  subscriptionMealTypes SubscriptionMealType[]
+
+  @@index([customerId, status])
+  @@index([brandId])
+  @@index([startDate, endDate])
+  @@map("customer_subscriptions")
+}
+
+model SubscriptionMealType {
+  id             String               @id @default(cuid())
+  subscriptionId String
+  mealTypeId     String
+  createdAt      DateTime             @default(now())
+  mealType       MealType             @relation(fields: [mealTypeId], references: [id], onDelete: Cascade)
+  subscription   CustomerSubscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+
+  @@unique([subscriptionId, mealTypeId])
+  @@map("subscription_meal_types")
+}
+
+model Order {
+  id               String               @id @default(cuid())
+  orderNumber      String               @unique
+  customerId       String
+  subscriptionId   String
+  categoryId       String
+  planId           String
+  orderDate        DateTime
+  orderCreatedDate DateTime             @default(now())
+  status           OrderStatus          @default(CONFIRMED)
+  totalAmount      Decimal?             @db.Decimal(10, 2)
+  notes            String?
+  createdAt        DateTime             @default(now())
+  updatedAt        DateTime             @updatedAt
+  orderItems       OrderItem[]
+  category         Category             @relation(fields: [categoryId], references: [id])
+  customer         Customer             @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  plan             Plan                 @relation(fields: [planId], references: [id])
+  subscription     CustomerSubscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+
+  @@index([customerId, orderDate])
+  @@index([customerId, subscriptionId])
+  @@index([orderDate, status])
+  @@map("orders")
+}
+
+model OrderItem {
+  id                 String           @id @default(cuid())
+  orderId            String
+  foodItemId         String
+  mealTypeId         String
+  deliveryLocationId String
+  deliveredDate      DateTime?
+  quantity           Int?             @default(1)
+  price              Decimal?         @db.Decimal(10, 2)
+  notes              String?
+  createdAt          DateTime         @default(now())
+  deliveryLocation   CustomerLocation @relation(fields: [deliveryLocationId], references: [id])
+  foodItem           FoodItem         @relation(fields: [foodItemId], references: [id])
+  mealType           MealType         @relation(fields: [mealTypeId], references: [id])
+  order              Order            @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId])
+  @@map("order_items")
+}
+
+model Holiday {
+  id          String      @id @default(cuid())
+  brandId     String
+  name        String
+  description String?
+  type        HolidayType @default(SPECIFIC_DATE)
+  date        DateTime?
+  dayOfWeek   DayOfWeek?
+  isActive    Boolean     @default(true)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  brand       Brand       @relation(fields: [brandId], references: [id], onDelete: Cascade)
+
+  @@index([brandId, date])
+  @@index([brandId, dayOfWeek])
+  @@map("holidays")
+}
+
+model BrandSettings {
+  id                     String   @id @default(cuid())
+  brandId                String   @unique
+  advanceOrderCutoffHour Int      @default(18)
+  minAdvanceOrderDays    Int      @default(1)
+  maxAdvanceOrderDays    Int      @default(7)
+  whatsappNumber         String?
+  phoneNumber            String?
+  helpCenterUrl          String?
+  termsAndConditions     String?
+  isActive               Boolean  @default(true)
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+  privacyPolicy          String?
+  brand                  Brand    @relation(fields: [brandId], references: [id], onDelete: Cascade)
+
+  @@map("brand_settings")
+}
+
+model Banner {
+  id          String          @id @default(cuid())
+  brandId     String
+  placement   BannerPlacement
+  title       String?
+  description String?
+  isActive    Boolean         @default(true)
+  sortOrder   Int             @default(0)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  images      BannerImage[]
+  brand       Brand           @relation(fields: [brandId], references: [id], onDelete: Cascade)
+
+  @@map("banners")
+}
+
+model BannerImage {
+  id          String  @id @default(cuid())
+  bannerId    String
+  imageUrl    String
+  redirectUrl String?
+  caption     String?
+  sortOrder   Int     @default(0)
+  isActive    Boolean @default(true)
+  banner      Banner  @relation(fields: [bannerId], references: [id], onDelete: Cascade)
+
+  @@map("banner_image")
+}
+
+model Notification {
+  id               String               @id @default(cuid())
+  brandId          String
+  customerId       String?
+  type             NotificationType     @default(GENERAL)
+  priority         NotificationPriority @default(NORMAL)
+  imageUrl         String?
+  actionUrl        String?
+  caption          String
+  description      String?
+  sentAt           DateTime?
+  createdAt        DateTime             @default(now())
+  updatedAt        DateTime             @updatedAt
+  deletedAt        DateTime?
+  notificationRead NotificationRead[]
+  brand            Brand                @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  customer         Customer?            @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@index([customerId])
+  @@index([createdAt])
+  @@index([type])
+  @@index([sentAt])
+  @@map("notifications")
+}
+
+model NotificationRead {
+  id             String       @id @default(cuid())
+  notificationId String
+  customerId     String
+  readAt         DateTime     @default(now())
+  customer       Customer     @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  notification   Notification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+
+  @@unique([notificationId, customerId])
+  @@index([customerId])
+  @@index([notificationId])
+  @@index([readAt])
+  @@map("notification_reads")
+}
+
+enum AdminRole {
+  SUPER_ADMIN
+  BRAND_ADMIN
+  DELIVERY_MANAGER
+  DELIVERY_STAFF
+}
+
+enum CustomerStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+}
+
+enum CustomerLocationType {
+  HOME
+  WORK
+  OTHER
+}
+
+enum PlanType {
+  BASIC
+  PREMIUM
+  ULTIMATE
+}
+
+enum MealTypeEnum {
+  BREAKFAST
+  LUNCH
+  DINNER
+}
+
+enum DayOfWeek {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}
+
+enum DeliveryMode {
+  SEPARATE
+  WITH_OTHER
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  EXPIRED
+  CANCELLED
+  PENDING
+}
+
+enum OrderStatus {
+  CONFIRMED
+  DELIVERED
+  CANCELLED
+}
+
+enum HolidayType {
+  SPECIFIC_DATE
+  RECURRING_WEEKLY
+}
+
+enum BannerPlacement {
+  HOME_PAGE_TOP
+  HOME_PAGE_MIDDLE_1
+  HOME_PAGE_MIDDLE_2
+  HOME_PAGE_BOTTOM
+  SUBSCRIPTION_PAGE
+  LOCATION_FORM
+}
+
+enum NotificationType {
+  GENERAL
+  ALERT
+  PROMOTION
+  ANNOUNCEMENT
+  DELIVERY
+  SYSTEM
+}
+
+enum NotificationPriority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}

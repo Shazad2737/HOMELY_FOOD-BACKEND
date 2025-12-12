@@ -1,0 +1,473 @@
+{% extends "../layouts/master.njk" %}
+
+{% block container %}
+    <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+        <div class="d-flex flex-column flex-column-fluid">
+            <!--begin::Toolbar-->
+            <div id="kt_app_toolbar" class="app-toolbar pt-2 pt-lg-10">
+                <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex align-items-stretch">
+                    <div class="app-toolbar-wrapper d-flex flex-stack flex-wrap gap-4 w-100">
+                        <div class="page-title d-flex flex-column justify-content-center gap-1 me-3">
+                            <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bold fs-3 m-0">
+                                Customer Details
+                            </h1>
+                            <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0">
+                                <li class="breadcrumb-item text-muted">
+                                    <a href="/admin/dashboard" class="text-muted text-hover-primary">Home</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <span class="bullet bg-gray-500 w-5px h-2px"></span>
+                                </li>
+                                <li class="breadcrumb-item text-muted">
+                                    <a href="/admin/customer" class="text-muted text-hover-primary">Customers</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <span class="bullet bg-gray-500 w-5px h-2px"></span>
+                                </li>
+                                <li class="breadcrumb-item text-muted">{{ customer.name }}</li>
+                            </ul>
+                        </div>
+                        <div class="d-flex align-items-center gap-2 gap-lg-3">
+                            <a href="/admin/customer" class="btn btn-sm btn-light">
+                                <i class="ki-outline ki-left fs-2"></i>Back to List
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end::Toolbar-->
+
+            <!--begin::Content-->
+            <div id="kt_app_content" class="app-content flex-column-fluid">
+                <div id="kt_app_content_container" class="app-container container-fluid">
+
+                    <!--begin::Customer Overview-->
+                    <div class="card mb-5 mb-xl-10">
+                        <div class="card-body pt-9 pb-0">
+                            <!--begin::Details-->
+                            <div class="d-flex flex-wrap flex-sm-nowrap mb-3">
+                                <!--begin::Image-->
+                                <div class="me-7 mb-4">
+                                    <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
+                                        <img src="{{ customer.profileUrl or '/admin/media/blank.png' }}" alt="{{ customer.name }}">
+                                        {% if customer.isVerified %}
+                                            <div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-body h-20px w-20px"></div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <!--end::Image-->
+
+                                <!--begin::Info-->
+                                <div class="flex-grow-1">
+                                    <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
+                                        <div class="d-flex flex-column">
+                                            <div class="d-flex align-items-center mb-2">
+                                                <span class="text-gray-900 fs-2 fw-bold me-1">{{ customer.name }}</span>
+                                                {% if customer.isVerified %}
+                                                    <i class="ki-outline ki-verify fs-1 text-success"></i>
+                                                {% endif %}
+                                            </div>
+                                            <div class="d-flex flex-wrap fw-semibold fs-6 mb-4 pe-2">
+                                                <span class="d-flex align-items-center text-gray-500 me-5 mb-2">
+                                                    <i class="ki-outline ki-phone fs-4 me-1"></i>
+                                                    {{ customer.mobile }}
+                                                </span>
+                                                {# {% if customer.email %}
+                                                    <span class="d-flex align-items-center text-gray-500 mb-2">
+                                                        <i class="ki-outline ki-sms fs-4 me-1"></i>
+                                                        {{ customer.email }}
+                                                    </span>
+                                                {% endif %} #}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-wrap flex-stack">
+                                        <div class="d-flex flex-column flex-grow-1 pe-8">
+                                            <div class="d-flex flex-wrap">
+                                                <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                                    <div class="d-flex align-items-center">
+                                                        <i class="ki-outline ki-basket fs-3 text-success me-2"></i>
+                                                        <div class="fs-2 fw-bold">{{ customer._count.orders }}</div>
+                                                    </div>
+                                                    <div class="fw-semibold fs-6 text-gray-500">Total Orders</div>
+                                                </div>
+                                                <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                                    <div class="d-flex align-items-center">
+                                                        <i class="ki-outline ki-calendar-tick fs-3 text-primary me-2"></i>
+                                                        <div class="fs-2 fw-bold">{{ customer._count.subscriptions }}</div>
+                                                    </div>
+                                                    <div class="fw-semibold fs-6 text-gray-500">Subscriptions</div>
+                                                </div>
+                                                <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                                    <div class="d-flex align-items-center">
+                                                        <i class="ki-outline ki-geolocation fs-3 text-info me-2"></i>
+                                                        <div class="fs-2 fw-bold">{{ customer._count.locations }}</div>
+                                                    </div>
+                                                    <div class="fw-semibold fs-6 text-gray-500">Locations</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end::Info-->
+                            </div>
+                            <!--end::Details-->
+
+                            <!--begin::Navs-->
+                            <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
+                                <li class="nav-item mt-2">
+                                    <a class="nav-link text-active-primary ms-0 me-10 py-5 active" data-bs-toggle="tab" href="#kt_customer_overview">Overview</a>
+                                </li>
+                                <li class="nav-item mt-2">
+                                    <a class="nav-link text-active-primary ms-0 me-10 py-5" data-bs-toggle="tab" href="#kt_customer_locations">Locations</a>
+                                </li>
+                                <li class="nav-item mt-2">
+                                    <a class="nav-link text-active-primary ms-0 me-10 py-5" data-bs-toggle="tab" href="#kt_customer_orders">Orders</a>
+                                </li>
+                                <li class="nav-item mt-2">
+                                    <a class="nav-link text-active-primary ms-0 me-10 py-5" data-bs-toggle="tab" href="#kt_customer_subscriptions">Subscriptions</a>
+                                </li>
+                            </ul>
+                            <!--end::Navs-->
+                        </div>
+                    </div>
+                    <!--end::Customer Overview-->
+
+                    <!--begin::Tab Content-->
+                    <div class="tab-content" id="myTabContent">
+                        <!--begin::Overview Tab-->
+                        <div class="tab-pane fade show active" id="kt_customer_overview" role="tabpanel">
+                            <div class="row g-5 g-xl-8">
+                                <!--begin::Details Card-->
+                                <div class="col-xl-6">
+                                    <div class="card card-flush h-xl-100">
+                                        <div class="card-header">
+                                            <h3 class="card-title align-items-start flex-column">
+                                                <span class="card-label fw-bold text-gray-900">Customer Information</span>
+                                            </h3>
+                                        </div>
+                                        <div class="card-body pt-5">
+                                            <div class="mb-7">
+                                                <div class="d-flex align-items-center mb-2">
+                                                    <span class="fw-bold text-gray-800 fs-6 me-2">Customer Code:</span>
+                                                    <span class="text-gray-600">{{ customer.customerCode }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="mb-7">
+                                                <div class="d-flex align-items-center mb-2">
+                                                    <span class="fw-bold text-gray-800 fs-6 me-2">Status:</span>
+                                                    {% if customer.status == 'ACTIVE' %}
+                                                        <span class="badge badge-light-success">Active</span>
+                                                    {% elif customer.status == 'INACTIVE' %}
+                                                        <span class="badge badge-light-warning">Inactive</span>
+                                                    {% else %}
+                                                        <span class="badge badge-light-danger">Suspended</span>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="mb-7">
+                                                <div class="d-flex align-items-center mb-2">
+                                                    <span class="fw-bold text-gray-800 fs-6 me-2">Verification:</span>
+                                                    {% if customer.isVerified %}
+                                                        <span class="badge badge-light-success">
+                                                            <i class="ki-outline ki-check-circle fs-6 me-1"></i>Verified
+                                                    </span>
+                                                    {% else %}
+                                                        <span class="badge badge-light-warning">
+                                                            <i class="ki-outline ki-cross-circle fs-6 me-1"></i>Not Verified
+                                                    </span>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="mb-7">
+                                                <div class="d-flex align-items-center mb-2">
+                                                    <span class="fw-bold text-gray-800 fs-6 me-2">Joined Date:</span>
+                                                    <span class="text-gray-600">{{ formatDateTimeInTimezone(customer.createdAt) }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="mb-0">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="fw-bold text-gray-800 fs-6 me-2">Last Updated:</span>
+                                                    <span class="text-gray-600">{{ formatDateTimeInTimezone(customer.updatedAt) }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end::Details Card-->
+
+                                <!--begin::Stats Card-->
+                                <div class="col-xl-6">
+                                    <div class="card card-flush h-xl-100">
+                                        <div class="card-header">
+                                            <h3 class="card-title align-items-start flex-column">
+                                                <span class="card-label fw-bold text-gray-900">Activity Summary</span>
+                                            </h3>
+                                        </div>
+                                        <div class="card-body pt-5">
+                                            <div class="mb-7">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="symbol symbol-50px me-5">
+                                                        <span class="symbol-label bg-light-primary">
+                                                            <i class="ki-outline ki-basket fs-2x text-primary"></i>
+                                                        </span>
+                                                    </div>
+                                                    <div class="flex-grow-1">
+                                                        <span class="text-gray-800 fw-bold d-block fs-6">Total Orders</span>
+                                                        <span class="text-muted fw-semibold fs-7">Lifetime orders placed</span>
+                                                    </div>
+                                                    <span class="badge badge-light-primary fs-5">{{ customer._count.orders }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="mb-7">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="symbol symbol-50px me-5">
+                                                        <span class="symbol-label bg-light-success">
+                                                            <i class="ki-outline ki-calendar-tick fs-2x text-success"></i>
+                                                        </span>
+                                                    </div>
+                                                    <div class="flex-grow-1">
+                                                        <span class="text-gray-800 fw-bold d-block fs-6">Active Subscriptions</span>
+                                                        <span class="text-muted fw-semibold fs-7">Currently subscribed</span>
+                                                    </div>
+                                                    <span class="badge badge-light-success fs-5">{{ customer._count.subscriptions }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="mb-0">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="symbol symbol-50px me-5">
+                                                        <span class="symbol-label bg-light-info">
+                                                            <i class="ki-outline ki-geolocation fs-2x text-info"></i>
+                                                        </span>
+                                                    </div>
+                                                    <div class="flex-grow-1">
+                                                        <span class="text-gray-800 fw-bold d-block fs-6">Saved Locations</span>
+                                                        <span class="text-muted fw-semibold fs-7">Delivery addresses</span>
+                                                    </div>
+                                                    <span class="badge badge-light-info fs-5">{{ customer._count.locations }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end::Stats Card-->
+                            </div>
+                        </div>
+                        <!--end::Overview Tab-->
+
+                        <!--begin::Locations Tab-->
+                        <div class="tab-pane fade" id="kt_customer_locations" role="tabpanel">
+                            <div class="card card-flush">
+                                <div class="card-header">
+                                    <h3 class="card-title align-items-start flex-column">
+                                        <span class="card-label fw-bold text-gray-900">Saved Locations</span>
+                                        <span class="text-muted mt-1 fw-semibold fs-7">{{ customer._count.locations }} total locations</span>
+                                    </h3>
+                                </div>
+                                <div class="card-body pt-5">
+                                    {% if customer.locations.length > 0 %}
+                                        <div class="row g-6 g-xl-9">
+                                            {% for location in customer.locations %}
+                                                <div class="col-md-6 col-xl-4">
+                                                    <div class="card border border-2 border-gray-300 border-hover h-100">
+                                                        <div class="card-header border-0 pt-9">
+                                                            <div class="card-title m-0">
+                                                                <div class="symbol symbol-50px w-50px bg-light">
+                                                                    {% if location.type == 'HOME' %}
+                                                                        <i class="ki-outline ki-home-2 fs-2x text-primary"></i>
+                                                                    {% elif location.type == 'WORK' %}
+                                                                        <i class="ki-outline ki-briefcase fs-2x text-success"></i>
+                                                                    {% else %}
+                                                                        <i class="ki-outline ki-map fs-2x text-info"></i>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-toolbar">
+                                                                {% if location.isDefault %}
+                                                                    <span class="badge badge-light-primary">Default</span>
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-body p-9">
+                                                            <div class="fs-3 fw-bold text-gray-900">{{ location.type }}</div>
+                                                            {% if location.name %}
+                                                                <p class="text-gray-600 fw-semibold fs-5 mt-1 mb-3">{{ location.name }}</p>
+                                                            {% endif %}
+                                                            <div class="d-flex flex-column text-gray-700">
+                                                                {% if location.roomNumber %}
+                                                                    <div class="d-flex align-items-center mb-2">
+                                                                        <i class="ki-outline ki-home fs-6 me-2"></i>
+                                                                        <span class="fs-7">Room: {{ location.roomNumber }}</span>
+                                                                    </div>
+                                                                {% endif %}
+                                                                {% if location.buildingName %}
+                                                                    <div class="d-flex align-items-center mb-2">
+                                                                        <i class="ki-outline ki-bank fs-6 me-2"></i>
+                                                                        <span class="fs-7">{{ location.buildingName }}</span>
+                                                                    </div>
+                                                                {% endif %}
+                                                                {% if location.area %}
+                                                                    <div class="d-flex align-items-center mb-2">
+                                                                        <i class="ki-outline ki-geolocation fs-6 me-2"></i>
+                                                                        <span class="fs-7">{{ location.area.name }}</span>
+                                                                    </div>
+                                                                {% endif %}
+                                                                {% if location.mobile %}
+                                                                    <div class="d-flex align-items-center mb-2">
+                                                                        <i class="ki-outline ki-phone fs-6 me-2"></i>
+                                                                        <span class="fs-7">{{ location.mobile }}</span>
+                                                                    </div>
+                                                                {% endif %}
+                                                                {% if location.zipCode %}
+                                                                    <div class="d-flex align-items-center">
+                                                                        <i class="ki-outline ki-map fs-6 me-2"></i>
+                                                                        <span class="fs-7">ZIP: {{ location.zipCode }}</span>
+                                                                    </div>
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        <div class="text-center py-10">
+                                            <i class="ki-outline ki-geolocation fs-4x text-muted mb-4"></i>
+                                            <p class="text-gray-600 fs-4 fw-semibold mb-2">No locations saved</p>
+                                            <p class="text-muted fs-6">Customer hasn't added any delivery addresses yet</p>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Locations Tab-->
+
+                        <!--begin::Orders Tab-->
+                        <div class="tab-pane fade" id="kt_customer_orders" role="tabpanel">
+                            <div class="card card-flush">
+                                <div class="card-header">
+                                    <h3 class="card-title align-items-start flex-column">
+                                        <span class="card-label fw-bold text-gray-900">Recent Orders</span>
+                                        <span class="text-muted mt-1 fw-semibold fs-7">{{ customer._count.orders }} total orders</span>
+                                    </h3>
+                                </div>
+                                <div class="card-body pt-5">
+                                    {% if customer.orders.length > 0 %}
+                                        <div class="table-responsive">
+                                            <table class="table table-row-dashed align-middle gs-0 gy-4">
+                                                <thead>
+                                                    <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+                                                        <th class="min-w-100px">Order #</th>
+                                                        <th class="min-w-100px">Date</th>
+                                                        <th class="min-w-100px">Status</th>
+                                                        <th class="min-w-80px">Items</th>
+                                                        <th class="text-end min-w-100px">Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for order in customer.orders %}
+                                                        <tr>
+                                                            <td>
+                                                                <a href="/admin/order/view/{{ order.id }}" class="text-gray-800 text-hover-primary fw-bold">
+                                                                    {{ order.orderNumber }}
+                                                                </a>
+                                                            </td>
+                                                            <td>
+                                                                <span class="text-gray-600 fw-semibold">{{ formatDateInTimezone(order.orderDate) }}</span>
+                                                            </td>
+                                                            <td>
+                                                                {% if order.status == 'CONFIRMED' %}
+                                                                    <span class="badge badge-light-primary">Confirmed</span>
+                                                                {% elif order.status == 'DELIVERED' %}
+                                                                    <span class="badge badge-light-success">Delivered</span>
+                                                                {% else %}
+                                                                    <span class="badge badge-light-danger">Cancelled</span>
+                                                                {% endif %}
+                                                            </td>
+                                                            <td>
+                                                                <span class="badge badge-light-info">{{ order._count.orderItems }}</span>
+                                                            </td>
+                                                            <td class="text-end">
+                                                                <a href="/admin/order/view/{{ order.id }}" class="btn btn-sm btn-light btn-active-light-primary">
+                                                            View
+                                                        </a>
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    {% else %}
+                                        <div class="text-center py-10">
+                                            <i class="ki-outline ki-basket fs-4x text-muted mb-4"></i>
+                                            <p class="text-gray-600 fs-4 fw-semibold mb-2">No orders yet</p>
+                                            <p class="text-muted fs-6">Customer hasn't placed any orders</p>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Orders Tab-->
+
+                        <!--begin::Subscriptions Tab-->
+                        <div class="tab-pane fade" id="kt_customer_subscriptions" role="tabpanel">
+                            <div class="card card-flush">
+                                <div class="card-header">
+                                    <h3 class="card-title align-items-start flex-column">
+                                        <span class="card-label fw-bold text-gray-900">Subscriptions</span>
+                                        <span class="text-muted mt-1 fw-semibold fs-7">{{ customer._count.subscriptions }} active subscriptions</span>
+                                    </h3>
+                                </div>
+                                <div class="card-body pt-5">
+                                    {% if customer.subscriptions.length > 0 %}
+                                        <div class="row g-6 g-xl-9">
+                                            {% for subscription in customer.subscriptions %}
+                                                <div class="col-md-6 col-xl-4">
+                                                    <div class="card border border-2 border-gray-300 border-hover h-100">
+                                                        <div class="card-body">
+                                                            <div class="mb-5">
+                                                                <span class="badge badge-light-primary fs-7">Subscription</span>
+                                                            </div>
+                                                            <div class="fs-4 fw-bold text-gray-900 mb-2">
+                                                                {{ subscription.plan.name if subscription.plan else 'N/A' }}
+                                                            </div>
+                                                            <div class="text-gray-600 fw-semibold fs-6 mb-5">
+                                                                {{ subscription.category.name if subscription.category else 'N/A' }}
+                                                            </div>
+                                                            <div class="d-flex flex-column text-gray-700">
+                                                                <div class="d-flex align-items-center mb-2">
+                                                                    <i class="ki-outline ki-calendar fs-6 me-2"></i>
+                                                                    <span class="fs-7">Started: {{ formatDateInTimezone(subscription.createdAt) }}</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        <div class="text-center py-10">
+                                            <i class="ki-outline ki-calendar-tick fs-4x text-muted mb-4"></i>
+                                            <p class="text-gray-600 fs-4 fw-semibold mb-2">No subscriptions</p>
+                                            <p class="text-muted fs-6">Customer doesn't have any active subscriptions</p>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Subscriptions Tab-->
+                    </div>
+                    <!--end::Tab Content-->
+                </div>
+            </div>
+            <!--end::Content-->
+        </div>
+
+        <!--begin::Footer-->
+        {% include '../partials/_footer-panel.njk' %}
+        <!--end::Footer-->
+    </div>
+{% endblock %}
+
+{% block customScript %}{% endblock %}

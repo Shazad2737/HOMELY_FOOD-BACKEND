@@ -1,0 +1,109 @@
+{% extends "../layouts/master.njk" %}
+{% block container %}
+    <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+        <div
+            class="d-flex flex-column flex-column-fluid">
+            <!--begin::Toolbar-->
+            <div id="kt_app_toolbar" class="app-toolbar pt-2 pt-lg-10">
+                <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex align-items-stretch">
+                    <div class="app-toolbar-wrapper d-flex flex-stack flex-wrap gap-4 w-100">
+                        <div class="page-title d-flex flex-column justify-content-center gap-1 me-3">
+                            <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bold fs-3 m-0">
+                                All Holidays
+                            </h1>
+                            <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0">
+                                <li class="breadcrumb-item text-muted">
+                                    <a href="/admin/dashboard" class="text-muted text-hover-primary">Home</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <span class="bullet bg-gray-500 w-5px h-2px"></span>
+                                </li>
+                                <li class="breadcrumb-item text-muted">Holidays</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end::Toolbar-->
+            <!--begin::Content-->
+            <div id="kt_app_content" class="app-content flex-column-fluid">
+                <div id="kt_app_content_container" class="app-container container-fluid">
+                    <div
+                        class="card card-flush">
+                        <!--begin::Card header-->
+                        <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+                            <div
+                                class="card-toolbar flex-row-fluid justify-content-end gap-5">
+                                <!--begin::Type filter-->
+                                <div class="w-100 mw-150px">
+                                    <select id="holiday_type_filter" class="form-select form-select-solid" data-control="select2" data-hide-search="true">
+                                        <option value="">All Types</option>
+                                        <option value="SPECIFIC_DATE">Specific Date</option>
+                                        <option value="RECURRING_WEEKLY">Recurring Weekly</option>
+                                    </select>
+                                </div>
+                                <!--end::Type filter-->
+                                <!--begin::Status filter-->
+                                <div class="w-100 mw-150px">
+                                    <select id="holiday_status_filter" class="form-select form-select-solid" data-control="select2" data-hide-search="true">
+                                        <option value="">All Status</option>
+                                        <option value="true">Active</option>
+                                        <option value="false">Inactive</option>
+                                    </select>
+                                </div>
+                                <!--end::Status filter-->
+                                <!--begin::Clear filter-->
+                                <button id="clear_filters_btn" class="btn btn-icon btn-light" title="Clear filters">
+                                    <span class="svg-icon svg-icon-2">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <rect
+                                                opacity="0.5"
+                                                x="7.05025"
+                                                y="15.5356"
+                                                width="12"
+                                                height="2"
+                                                rx="1"
+                                                transform="rotate(-45 7.05025 15.5356)"
+                                                fill="currentColor"/>
+                                            <rect x="8.46447" y="7.05029" width="12" height="2" rx="1" transform="rotate(45 8.46447 7.05029)" fill="currentColor"/>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <!--end::Clear filter-->
+                                <a href="/admin/holiday/add" class="btn btn-primary">
+                                    <i class="ki-outline ki-plus fs-2"></i>
+                                    Add Holiday
+                                </a>
+                            </div>
+                        </div>
+                        <!--end::Card header-->
+                        <!--begin::Card body-->
+                        <div class="card-body pt-0">
+                            <table class="table align-middle table-row-dashed fs-6 gy-5" id="holiday_table">
+                                <thead>
+                                    <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+                                        <th class="min-w-200px">Holiday Name</th>
+                                        <th class="min-w-150px">Type</th>
+                                        <th class="min-w-140px">Date/Day</th>
+                                        <th class="min-w-200px">Description</th>
+                                        <th class="min-w-80px">Status</th>
+                                        <th class="text-center min-w-100px">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="fw-semibold text-gray-600"></tbody>
+                            </table>
+                        </div>
+                        <!--end::Card body-->
+                    </div>
+                </div>
+            </div>
+            <!--end::Content-->
+        </div>
+        <!--begin::Footer-->
+        {% include '../partials/_footer-panel.njk' %}
+        <!--end::Footer-->
+    </div>
+{% endblock %}
+{% block customScript %}
+    <script src="/admin/custom/holiday-list.js"></script>
+{% endblock %}

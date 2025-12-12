@@ -1,0 +1,1146 @@
+{
+    "exportDate": "2025-11-27T10:56:26.651Z",
+    "categories": [
+        {
+            "name": "Authentic",
+            "description": null,
+            "imageUrl": "https://ik.imagekit.io/jowharr/insta_mess_dev/production/Category/image_10__4__lRwWQCHAQ.png",
+            "isActive": true,
+            "sortOrder": 1,
+            "locations": [
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Reem Island"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Downtown Dubai"
+                },
+                {
+                    "locationCode": "SHJ",
+                    "areaName": "Al Nahda"
+                },
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Khalidiyah"
+                },
+                {
+                    "locationCode": "SHJ",
+                    "areaName": "Al Majaz"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Dubai Marina"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Jumeirah"
+                },
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Wahda"
+                }
+            ]
+        },
+        {
+            "name": "Diet",
+            "description": null,
+            "imageUrl": "https://ik.imagekit.io/jowharr/insta_mess_dev/production/Category/image_10__5__3qKLJ9DR0x.png",
+            "isActive": true,
+            "sortOrder": 2,
+            "locations": [
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Reem Island"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Downtown Dubai"
+                },
+                {
+                    "locationCode": "SHJ",
+                    "areaName": "Al Nahda"
+                },
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Khalidiyah"
+                },
+                {
+                    "locationCode": "SHJ",
+                    "areaName": "Al Majaz"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Dubai Marina"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Jumeirah"
+                },
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Wahda"
+                }
+            ]
+        },
+        {
+            "name": "Ready to cook",
+            "description": null,
+            "imageUrl": "https://ik.imagekit.io/jowharr/insta_mess_dev/production/Category/image_10__6__eFUl0nJ8M.png",
+            "isActive": true,
+            "sortOrder": 3,
+            "locations": [
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Reem Island"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Downtown Dubai"
+                },
+                {
+                    "locationCode": "SHJ",
+                    "areaName": "Al Nahda"
+                },
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Khalidiyah"
+                },
+                {
+                    "locationCode": "SHJ",
+                    "areaName": "Al Majaz"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Dubai Marina"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Jumeirah"
+                },
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Wahda"
+                }
+            ]
+        },
+        {
+            "name": "Chef Special",
+            "description": null,
+            "imageUrl": "https://ik.imagekit.io/jowharr/insta_mess_dev/production/Category/image_10__7__AQeJP44lI.png",
+            "isActive": true,
+            "sortOrder": 4,
+            "locations": [
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Reem Island"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Downtown Dubai"
+                },
+                {
+                    "locationCode": "SHJ",
+                    "areaName": "Al Nahda"
+                },
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Khalidiyah"
+                },
+                {
+                    "locationCode": "SHJ",
+                    "areaName": "Al Majaz"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Dubai Marina"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Jumeirah"
+                },
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Wahda"
+                }
+            ]
+        }
+    ],
+    "plans": [
+        {
+            "name": "Basic",
+            "type": "BASIC",
+            "categoryName": "Diet",
+            "description": null,
+            "imageUrl": "https://ik.imagekit.io/jowharr/insta_mess_dev/production/Plans/complete-guide-to-the-whole-30-diet-a-beginners-guide-7-day-meal-plan-for-weight-loss-1_GSMp35672j.jpg",
+            "isActive": true,
+            "isUnlimited": false,
+            "sortOrder": 1,
+            "foodItemCount": 0
+        },
+        {
+            "name": "Premium",
+            "type": "PREMIUM",
+            "categoryName": "Diet",
+            "description": null,
+            "imageUrl": "https://ik.imagekit.io/jowharr/insta_mess_dev/production/Plans/complete-guide-to-the-flat-belly-diet-a-beginners-guide-7-day-meal-plan-for-weight-loss_a_Xv7S-LU.jpg",
+            "isActive": true,
+            "isUnlimited": false,
+            "sortOrder": 2,
+            "foodItemCount": 0
+        },
+        {
+            "name": "Basic",
+            "type": "BASIC",
+            "categoryName": "Authentic",
+            "description": null,
+            "imageUrl": "https://ik.imagekit.io/jowharr/insta_mess_dev/production/Plans/18_authentic_TX47S__vc.jpg",
+            "isActive": true,
+            "isUnlimited": false,
+            "sortOrder": 1,
+            "foodItemCount": 15
+        },
+        {
+            "name": "Premium",
+            "type": "PREMIUM",
+            "categoryName": "Authentic",
+            "description": null,
+            "imageUrl": "https://ik.imagekit.io/jowharr/insta_mess_dev/production/Plans/download_QBKzv2WSog.jpeg",
+            "isActive": true,
+            "isUnlimited": false,
+            "sortOrder": 2,
+            "foodItemCount": 0
+        },
+        {
+            "name": "Ultimate",
+            "type": "ULTIMATE",
+            "categoryName": "Authentic",
+            "description": null,
+            "imageUrl": "https://ik.imagekit.io/jowharr/insta_mess_dev/production/Plans/download__1__quc-vAChT.jpeg",
+            "isActive": true,
+            "isUnlimited": true,
+            "sortOrder": 3,
+            "foodItemCount": 0
+        }
+    ],
+    "foodItems": [
+        {
+            "name": "Idili",
+            "code": "ABB 002",
+            "description": "3 Idili+Sambar+Chutney+Red chilli chutney",
+            "imageUrl": "https://ik.imagekit.io/jowharr/insta_mess_dev/production/FoodItem/idili_wnTyj493XO.jpg",
+            "cuisine": "North indian",
+            "style": "Kerala",
+            "isActive": true,
+            "isVegetarian": true,
+            "isVegan": false,
+            "mealType": "BREAKFAST",
+            "categoryName": "Authentic",
+            "deliveryMode": "SEPARATE",
+            "availableDays": [
+                "MONDAY",
+                "TUESDAY",
+                "WEDNESDAY",
+                "THURSDAY",
+                "FRIDAY",
+                "SATURDAY"
+            ],
+            "locations": [
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Reem Island"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Downtown Dubai"
+                },
+                {
+                    "locationCode": "SHJ",
+                    "areaName": "Al Nahda"
+                },
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Khalidiyah"
+                },
+                {
+                    "locationCode": "SHJ",
+                    "areaName": "Al Majaz"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "International city (Phase 1)"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Dubai Marina"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Jumeirah"
+                },
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Wahda"
+                }
+            ],
+            "planTypes": [
+                "BASIC"
+            ]
+        },
+        {
+            "name": "Chicken Kebab",
+            "code": "ABD 001",
+            "description": "Chicken Kebab+Soup",
+            "imageUrl": "https://ik.imagekit.io/jowharr/insta_mess_dev/production/FoodItem/juicy_grilled_b5E_Nd51O.jpeg",
+            "cuisine": "Arabic",
+            "style": "Egypt",
+            "isActive": true,
+            "isVegetarian": false,
+            "isVegan": false,
+            "mealType": "DINNER",
+            "categoryName": "Authentic",
+            "deliveryMode": "SEPARATE",
+            "availableDays": [
+                "MONDAY",
+                "TUESDAY",
+                "WEDNESDAY",
+                "THURSDAY",
+                "SATURDAY"
+            ],
+            "locations": [
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Reem Island"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Downtown Dubai"
+                },
+                {
+                    "locationCode": "SHJ",
+                    "areaName": "Al Nahda"
+                },
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Khalidiyah"
+                },
+                {
+                    "locationCode": "SHJ",
+                    "areaName": "Al Majaz"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Dubai Marina"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Jumeirah"
+                },
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Wahda"
+                }
+            ],
+            "planTypes": [
+                "BASIC"
+            ]
+        },
+        {
+            "name": "Meals - Mota Rice",
+            "code": "ABL 004",
+            "description": "Curd+Rasam+Fish curry",
+            "imageUrl": "https://ik.imagekit.io/jowharr/insta_mess_dev/production/FoodItem/a-vibrant-kerala-food-platter_xhjyLPZDi.webp",
+            "cuisine": "Indian",
+            "style": "Kerala",
+            "isActive": true,
+            "isVegetarian": false,
+            "isVegan": false,
+            "mealType": "LUNCH",
+            "categoryName": "Authentic",
+            "deliveryMode": "SEPARATE",
+            "availableDays": [
+                "MONDAY",
+                "TUESDAY",
+                "WEDNESDAY",
+                "THURSDAY",
+                "FRIDAY"
+            ],
+            "locations": [
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Reem Island"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Downtown Dubai"
+                },
+                {
+                    "locationCode": "SHJ",
+                    "areaName": "Al Nahda"
+                },
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Khalidiyah"
+                },
+                {
+                    "locationCode": "SHJ",
+                    "areaName": "Al Majaz"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Dubai Marina"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Jumeirah"
+                },
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Wahda"
+                }
+            ],
+            "planTypes": [
+                "BASIC"
+            ]
+        },
+        {
+            "name": "Meals - Barik Rice",
+            "code": "ABL 008",
+            "description": "Sambar+Pappadam+Thoran+Pickle",
+            "imageUrl": "https://ik.imagekit.io/jowharr/insta_mess_dev/production/FoodItem/istockphoto-1169639937-612x612_g4p-XwPfsK.jpg",
+            "cuisine": "India",
+            "style": "Kerala",
+            "isActive": true,
+            "isVegetarian": true,
+            "isVegan": false,
+            "mealType": "LUNCH",
+            "categoryName": "Authentic",
+            "deliveryMode": "SEPARATE",
+            "availableDays": [
+                "MONDAY",
+                "TUESDAY",
+                "WEDNESDAY",
+                "THURSDAY",
+                "FRIDAY",
+                "SATURDAY"
+            ],
+            "locations": [
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Reem Island"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Downtown Dubai"
+                },
+                {
+                    "locationCode": "SHJ",
+                    "areaName": "Al Nahda"
+                },
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Khalidiyah"
+                },
+                {
+                    "locationCode": "SHJ",
+                    "areaName": "Al Majaz"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Dubai Marina"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Jumeirah"
+                },
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Wahda"
+                }
+            ],
+            "planTypes": [
+                "BASIC"
+            ]
+        },
+        {
+            "name": "Puttu - Rice",
+            "code": "ABB 009",
+            "description": "1 Rice Puttu+Channa masala",
+            "imageUrl": "https://ik.imagekit.io/jowharr/insta_mess_dev/production/FoodItem/rq79vpv_puttu_625x300_28_december_22_SewDS0wYO.jpg",
+            "cuisine": "India",
+            "style": "Kerala",
+            "isActive": true,
+            "isVegetarian": true,
+            "isVegan": false,
+            "mealType": "BREAKFAST",
+            "categoryName": "Authentic",
+            "deliveryMode": "SEPARATE",
+            "availableDays": [
+                "MONDAY",
+                "TUESDAY",
+                "WEDNESDAY",
+                "THURSDAY",
+                "FRIDAY",
+                "SATURDAY"
+            ],
+            "locations": [
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Reem Island"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Downtown Dubai"
+                },
+                {
+                    "locationCode": "SHJ",
+                    "areaName": "Al Nahda"
+                },
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Khalidiyah"
+                },
+                {
+                    "locationCode": "SHJ",
+                    "areaName": "Al Majaz"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Dubai Marina"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Jumeirah"
+                },
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Wahda"
+                }
+            ],
+            "planTypes": [
+                "BASIC"
+            ]
+        },
+        {
+            "name": "Uppma - Rava",
+            "code": "ABB 010",
+            "description": "Coconut Chutney+Red chilli chutney",
+            "imageUrl": "https://ik.imagekit.io/jowharr/insta_mess_dev/production/FoodItem/istockphoto-1488737992-612x612_Ta0AgcFHA.jpg",
+            "cuisine": "India",
+            "style": "Kerala",
+            "isActive": true,
+            "isVegetarian": true,
+            "isVegan": false,
+            "mealType": "BREAKFAST",
+            "categoryName": "Authentic",
+            "deliveryMode": "SEPARATE",
+            "availableDays": [
+                "MONDAY",
+                "TUESDAY",
+                "WEDNESDAY",
+                "THURSDAY",
+                "FRIDAY",
+                "SATURDAY"
+            ],
+            "locations": [
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Reem Island"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Downtown Dubai"
+                },
+                {
+                    "locationCode": "SHJ",
+                    "areaName": "Al Nahda"
+                },
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Khalidiyah"
+                },
+                {
+                    "locationCode": "SHJ",
+                    "areaName": "Al Majaz"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "International city (Phase 1)"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Dubai Marina"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Jumeirah"
+                },
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Wahda"
+                }
+            ],
+            "planTypes": [
+                "BASIC"
+            ]
+        },
+        {
+            "name": "Puttu - Wheat",
+            "code": "S1-ABB-010",
+            "description": "Kadala Curry+Papadam+Banana",
+            "imageUrl": "https://ik.imagekit.io/jowharr/insta_mess_dev/production/FoodItem/1000_f_424706261_iyvh7taafmog0z1toegq58rjwhvgrflq_83A0aFujS9.jpg",
+            "cuisine": "Sorth indian",
+            "style": "Kerala",
+            "price": "10.5",
+            "isActive": true,
+            "isVegetarian": true,
+            "isVegan": false,
+            "mealType": "BREAKFAST",
+            "categoryName": "Authentic",
+            "deliveryMode": "SEPARATE",
+            "availableDays": [
+                "MONDAY",
+                "TUESDAY",
+                "WEDNESDAY",
+                "THURSDAY",
+                "FRIDAY",
+                "SATURDAY"
+            ],
+            "locations": [
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Reem Island"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Downtown Dubai"
+                },
+                {
+                    "locationCode": "SHJ",
+                    "areaName": "Al Nahda"
+                },
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Khalidiyah"
+                },
+                {
+                    "locationCode": "SHJ",
+                    "areaName": "Al Majaz"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "International city (Phase 1)"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Dubai Marina"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Jumeirah"
+                },
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Wahda"
+                }
+            ],
+            "planTypes": [
+                "BASIC"
+            ]
+        },
+        {
+            "name": "Chapati - Wheat",
+            "code": "ABD 008",
+            "description": "3 Chapati+Veg Kuruma",
+            "imageUrl": "https://ik.imagekit.io/jowharr/insta_mess_dev/production/FoodItem/360_f_249873914_raunvxk4tdnz2fz3rkmvunourg7iwehd_EbBUrlIym.jpg",
+            "cuisine": "India",
+            "style": "Kerala",
+            "isActive": true,
+            "isVegetarian": true,
+            "isVegan": false,
+            "mealType": "DINNER",
+            "categoryName": "Authentic",
+            "deliveryMode": "SEPARATE",
+            "availableDays": [
+                "MONDAY",
+                "TUESDAY",
+                "WEDNESDAY",
+                "THURSDAY",
+                "FRIDAY",
+                "SATURDAY"
+            ],
+            "locations": [
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Reem Island"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Downtown Dubai"
+                },
+                {
+                    "locationCode": "SHJ",
+                    "areaName": "Al Nahda"
+                },
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Khalidiyah"
+                },
+                {
+                    "locationCode": "SHJ",
+                    "areaName": "Al Majaz"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Dubai Marina"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Jumeirah"
+                },
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Wahda"
+                }
+            ],
+            "planTypes": [
+                "BASIC"
+            ]
+        },
+        {
+            "name": "Meals - Mota Rice",
+            "code": "ABL 003",
+            "description": "Sambar+Pappadam+Thoran+Pickle",
+            "imageUrl": "https://ik.imagekit.io/jowharr/insta_mess_dev/production/FoodItem/download__1__9a_yknrQF.jpeg",
+            "cuisine": "Indian",
+            "style": "Kerala",
+            "isActive": true,
+            "isVegetarian": true,
+            "isVegan": false,
+            "mealType": "LUNCH",
+            "categoryName": "Authentic",
+            "deliveryMode": "SEPARATE",
+            "availableDays": [
+                "MONDAY",
+                "TUESDAY",
+                "WEDNESDAY",
+                "THURSDAY",
+                "FRIDAY",
+                "SATURDAY"
+            ],
+            "locations": [
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Reem Island"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Downtown Dubai"
+                },
+                {
+                    "locationCode": "SHJ",
+                    "areaName": "Al Nahda"
+                },
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Khalidiyah"
+                },
+                {
+                    "locationCode": "SHJ",
+                    "areaName": "Al Majaz"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "International city (Phase 1)"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Dubai Marina"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Jumeirah"
+                },
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Wahda"
+                }
+            ],
+            "planTypes": [
+                "BASIC"
+            ]
+        },
+        {
+            "name": "Biriyani - Malabar",
+            "code": "ABL 001",
+            "description": "Salad+Pickle",
+            "imageUrl": "https://ik.imagekit.io/jowharr/insta_mess_dev/production/FoodItem/spicy_dum_biryani_K7peVaSzC.jpeg",
+            "cuisine": "South indian",
+            "style": "Kerala",
+            "isActive": true,
+            "isVegetarian": false,
+            "isVegan": false,
+            "mealType": "LUNCH",
+            "categoryName": "Authentic",
+            "deliveryMode": "SEPARATE",
+            "availableDays": [
+                "MONDAY",
+                "TUESDAY",
+                "WEDNESDAY",
+                "THURSDAY",
+                "SATURDAY"
+            ],
+            "locations": [
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Reem Island"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Downtown Dubai"
+                },
+                {
+                    "locationCode": "SHJ",
+                    "areaName": "Al Nahda"
+                },
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Khalidiyah"
+                },
+                {
+                    "locationCode": "SHJ",
+                    "areaName": "Al Majaz"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "International city (Phase 1)"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Dubai Marina"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Jumeirah"
+                },
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Wahda"
+                }
+            ],
+            "planTypes": [
+                "BASIC"
+            ]
+        },
+        {
+            "name": "Biriyani - Mutton",
+            "code": "ABL 002",
+            "description": "Salad + Pickle",
+            "imageUrl": "https://ik.imagekit.io/jowharr/insta_mess_dev/production/FoodItem/biriyani_2_WQ1XW4V0k.jpg",
+            "cuisine": "Indian",
+            "style": "Kerala",
+            "isActive": true,
+            "isVegetarian": false,
+            "isVegan": false,
+            "mealType": "LUNCH",
+            "categoryName": "Authentic",
+            "deliveryMode": "SEPARATE",
+            "availableDays": [
+                "MONDAY",
+                "TUESDAY",
+                "WEDNESDAY",
+                "THURSDAY",
+                "FRIDAY",
+                "SATURDAY"
+            ],
+            "locations": [
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Reem Island"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Downtown Dubai"
+                },
+                {
+                    "locationCode": "SHJ",
+                    "areaName": "Al Nahda"
+                },
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Khalidiyah"
+                },
+                {
+                    "locationCode": "SHJ",
+                    "areaName": "Al Majaz"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "International city (Phase 1)"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Dubai Marina"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Jumeirah"
+                },
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Wahda"
+                }
+            ],
+            "planTypes": [
+                "BASIC"
+            ]
+        },
+        {
+            "name": "Dosa",
+            "code": "ABB 008",
+            "description": "2 Dosa+Chutny+Sambar",
+            "imageUrl": "https://ik.imagekit.io/jowharr/insta_mess_dev/production/FoodItem/360_f_189452136_gjbg4zrxy9nnzzcgv2s8qhobmpeerjto_26A16OAgW.jpg",
+            "cuisine": "Indian",
+            "style": "Tamil Nadu",
+            "isActive": true,
+            "isVegetarian": true,
+            "isVegan": false,
+            "mealType": "BREAKFAST",
+            "categoryName": "Authentic",
+            "deliveryMode": "SEPARATE",
+            "deliverWith": "BREAKFAST",
+            "availableDays": [
+                "MONDAY",
+                "TUESDAY",
+                "WEDNESDAY",
+                "THURSDAY",
+                "FRIDAY",
+                "SATURDAY"
+            ],
+            "locations": [
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Reem Island"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Downtown Dubai"
+                },
+                {
+                    "locationCode": "SHJ",
+                    "areaName": "Al Nahda"
+                },
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Khalidiyah"
+                },
+                {
+                    "locationCode": "SHJ",
+                    "areaName": "Al Majaz"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Dubai Marina"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Jumeirah"
+                },
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Wahda"
+                }
+            ],
+            "planTypes": [
+                "BASIC"
+            ]
+        },
+        {
+            "name": "Masala Dosa",
+            "code": "ABB 001",
+            "description": "Sambar+Chutney+Idli Podi",
+            "imageUrl": "https://ik.imagekit.io/jowharr/insta_mess_dev/production/FoodItem/masala-dosa-recipe_2iLXh1JWa.jpg",
+            "cuisine": "Indian",
+            "style": "Kerala",
+            "isActive": true,
+            "isVegetarian": true,
+            "isVegan": false,
+            "mealType": "BREAKFAST",
+            "categoryName": "Authentic",
+            "deliveryMode": "WITH_OTHER",
+            "deliverWith": "BREAKFAST",
+            "availableDays": [
+                "MONDAY",
+                "TUESDAY",
+                "WEDNESDAY",
+                "THURSDAY",
+                "FRIDAY",
+                "SATURDAY"
+            ],
+            "locations": [
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Reem Island"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Downtown Dubai"
+                },
+                {
+                    "locationCode": "SHJ",
+                    "areaName": "Al Nahda"
+                },
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Khalidiyah"
+                },
+                {
+                    "locationCode": "SHJ",
+                    "areaName": "Al Majaz"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Dubai Marina"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Jumeirah"
+                },
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Wahda"
+                }
+            ],
+            "planTypes": [
+                "BASIC"
+            ]
+        },
+        {
+            "name": "Sandwich - Chicken",
+            "code": "S1-ABB-009",
+            "description": "Tomato sauce+French fries",
+            "imageUrl": "https://ik.imagekit.io/jowharr/insta_mess_dev/production/FoodItem/th_yhuEk4Myp.jfif",
+            "cuisine": "North indian",
+            "style": "Continental",
+            "isActive": true,
+            "isVegetarian": false,
+            "isVegan": false,
+            "mealType": "BREAKFAST",
+            "categoryName": "Authentic",
+            "deliveryMode": "SEPARATE",
+            "availableDays": [
+                "MONDAY",
+                "TUESDAY",
+                "WEDNESDAY",
+                "THURSDAY",
+                "FRIDAY"
+            ],
+            "locations": [
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Reem Island"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Downtown Dubai"
+                },
+                {
+                    "locationCode": "SHJ",
+                    "areaName": "Al Nahda"
+                },
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Khalidiyah"
+                },
+                {
+                    "locationCode": "SHJ",
+                    "areaName": "Al Majaz"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "International city (Phase 1)"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Dubai Marina"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Jumeirah"
+                },
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Wahda"
+                }
+            ],
+            "planTypes": [
+                "BASIC"
+            ]
+        },
+        {
+            "name": "Biriyani - Chicken",
+            "code": "S2-ABL-007",
+            "description": "2 Pcs Chicken+Salad+Pickle",
+            "imageUrl": "https://ik.imagekit.io/jowharr/insta_mess_dev/production/FoodItem/chicken-biryani-recipe_7u5eSF3af.jpg",
+            "cuisine": "South Indian",
+            "style": "Kerala",
+            "price": "0",
+            "isActive": true,
+            "isVegetarian": false,
+            "isVegan": false,
+            "mealType": "LUNCH",
+            "categoryName": "Authentic",
+            "deliveryMode": "WITH_OTHER",
+            "deliverWith": "BREAKFAST",
+            "availableDays": [
+                "MONDAY",
+                "TUESDAY",
+                "WEDNESDAY",
+                "THURSDAY",
+                "FRIDAY",
+                "SATURDAY"
+            ],
+            "locations": [
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Reem Island"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Downtown Dubai"
+                },
+                {
+                    "locationCode": "SHJ",
+                    "areaName": "Al Nahda"
+                },
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Khalidiyah"
+                },
+                {
+                    "locationCode": "SHJ",
+                    "areaName": "Al Majaz"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "International city (Phase 1)"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Dubai Marina"
+                },
+                {
+                    "locationCode": "DXB",
+                    "areaName": "Jumeirah"
+                },
+                {
+                    "locationCode": "AUH",
+                    "areaName": "Al Wahda"
+                }
+            ],
+            "planTypes": [
+                "BASIC"
+            ]
+        }
+    ]
+}

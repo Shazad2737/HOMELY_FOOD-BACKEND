@@ -1,0 +1,80 @@
+version: '3.8'
+
+services:
+  # Your Node.js/Express App
+  mess-app:
+    # This image tag will be updated by your pipeline
+    image: eatroot.azurecr.io/insta-mess:staging-abc1234
+    container_name: mess-app
+    restart: unless-stopped
+    depends_on:
+      - db
+      - cache
+    networks:
+      - mess-app-net
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      # HTTP Router rules
+      - "traefik.http.routers.instamess-app.entrypoints=http"
+      - "traefik.http.routers.instamess-app.rule=Host(`instamess-app.iotics.me`)"
+      - traefik.http.routers.instamess-app.middlewares=https-redirect@file
+      # HTTPS Router rules
+      - traefik.http.routers.instamess-app-https.rule=Host(`instamess-app.iotics.me`)
+      - traefik.http.routers.instamess-app-https.entrypoints=https
+      - traefik.http.routers.instamess-app-https.tls=true
+      - traefik.http.routers.instamess-app-https.tls.certresolver=letsencrypt
+      ## Service Rules
+      - "traefik.http.services.instamess-app-https.loadbalancer.server.port=8080"
+      - "traefik.docker.network=proxy"
+    ports:
+      # Maps host port 8001 to container port 8080 (or whatever your app uses)
+      - '8001:8080'
+    environment:
+      # Your app connects to the DB using the *service name* 'db'
+      DB_HOST: db
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      DB_NAME: ${POSTGRES_DB}
+      # Your app connects to Redis using the *service name* 'cache'
+      REDIS_HOST: cache
+      REDIS_PORT: 6379
+      NODE_ENV: production
+    # Loads environment variables from a .env file in the same directory
+    env_file:
+      - ./.env
+
+  # PostgreSQL Database
+  db:
+    image: postgres:15-alpine
+    container_name: my-new-app-db
+    restart: unless-stopped
+    volumes:
+      # Persists database data on the host machine
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - my-new-app-net
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    env_file:
+      - ./.env
+
+  # Redis Cache
+  cache:
+    image: redis:7-alpine
+    container_name: mess-app-cache
+    restart: unless-stopped
+    networks:
+      - mess-app-net
+
+# Networks allow services to communicate
+networks:
+  mess-app-net:
+    driver: bridge
+
+# Volumes persist data
+volumes:
+  db-data:
+    driver: local

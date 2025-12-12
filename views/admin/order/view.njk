@@ -1,0 +1,316 @@
+{% extends "../layouts/master.njk" %}
+
+{% block container %}
+    <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+        <div class="d-flex flex-column flex-column-fluid">
+            <!--begin::Toolbar-->
+            <div id="kt_app_toolbar" class="app-toolbar pt-2 pt-lg-10">
+                <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex align-items-stretch">
+                    <div class="app-toolbar-wrapper d-flex flex-stack flex-wrap gap-4 w-100">
+                        <div class="page-title d-flex flex-column justify-content-center gap-1 me-3">
+                            <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bold fs-3 m-0">
+                                Order Details #{{ order.orderNumber }}
+                            </h1>
+                            <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0">
+                                <li class="breadcrumb-item text-muted">
+                                    <a href="/admin/dashboard" class="text-muted text-hover-primary">Home</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <span class="bullet bg-gray-500 w-5px h-2px"></span>
+                                </li>
+                                <li class="breadcrumb-item text-muted">
+                                    <a href="/admin/order" class="text-muted text-hover-primary">Orders</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <span class="bullet bg-gray-500 w-5px h-2px"></span>
+                                </li>
+                                <li class="breadcrumb-item text-muted">{{ order.orderNumber }}</li>
+                            </ul>
+                        </div>
+                        {# <div class="d-flex align-items-center gap-2">
+                            {% if order.status != 'CANCELLED' %}
+                                <button id="cancel_order_btn" class="btn btn-sm btn-danger">
+                                    <i class="ki-outline ki-cross-circle fs-6"></i>
+                                Cancel Order
+                            </button>
+                            {% endif %}
+                        </div> #}
+                    </div>
+                </div>
+            </div>
+            <!--end::Toolbar-->
+
+            <!--begin::Content-->
+            <div id="kt_app_content" class="app-content flex-column-fluid">
+                <div id="kt_app_content_container" class="app-container container-fluid">
+                    <div class="row g-6 g-xl-9">
+                        <!--begin::Order Summary-->
+                        <div class="col-lg-4">
+                            <!--begin::Order Info Card-->
+                            <div class="card card-flush mb-6">
+                                <div class="card-header">
+                                    <div class="card-title">
+                                        <h3 class="fw-bold m-0">Order Summary</h3>
+                                    </div>
+                                </div>
+                                <div class="card-body pt-0">
+                                    <div class="d-flex flex-column gap-5">
+                                        <!--Order Number-->
+                                        <div class="d-flex align-items-center">
+                                            <span class="fw-semibold text-gray-600 flex-grow-1">Order Number:</span>
+                                            <span class="fw-bold">{{ order.orderNumber }}</span>
+                                        </div>
+
+                                        <!--Status-->
+                                        <div class="d-flex align-items-center">
+                                            <span class="fw-semibold text-gray-600 flex-grow-1">Status:</span>
+                                            {% if order.status == 'CONFIRMED' %}
+                                                <span class="badge badge-light-primary">{{ order.status }}</span>
+                                            {% elif order.status == 'DELIVERED' %}
+                                                <span class="badge badge-light-success">{{ order.status }}</span>
+                                            {% elif order.status == 'CANCELLED' %}
+                                                <span class="badge badge-light-danger">{{ order.status }}</span>
+                                            {% endif %}
+                                        </div>
+
+                                        <!--Order Date-->
+                                        <div class="d-flex align-items-center">
+                                            <span class="fw-semibold text-gray-600 flex-grow-1">Order Date:</span>
+                                            <span class="fw-bold">{{ formatDateInTimezone(order.orderDate) }}</span>
+                                        </div>
+
+                                        <!--Created Date-->
+                                        <div class="d-flex align-items-center">
+                                            <span class="fw-semibold text-gray-600 flex-grow-1">Created:</span>
+                                            <span class="text-gray-700">{{ formatDateTimeInTimezone(order.orderCreatedDate) }}</span>
+                                        </div>
+
+                                        <!--Total Amount-->
+                                        {# <div class="separator"></div>
+                                        <div class="d-flex align-items-center">
+                                            <span class="fw-bold text-gray-800 flex-grow-1 fs-5">Total Amount:</span>
+                                            <span class="fw-bold text-primary fs-3">{{ order.totalAmount | default(0) }}</span>
+                                        </div> #}
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::Order Info Card-->
+
+                            <!--begin::Customer Card-->
+                            <div class="card card-flush mb-6">
+                                <div class="card-header">
+                                    <div class="card-title">
+                                        <h3 class="fw-bold m-0">Customer Details</h3>
+                                    </div>
+                                </div>
+                                <div class="card-body pt-0">
+                                    <div class="d-flex flex-column gap-5">
+                                        <div>
+                                            <div class="fw-bold text-gray-800 fs-5 mb-1">{{ order.customer.name }}</div>
+                                            <div class="text-gray-600">
+                                                <i class="ki-outline ki-phone fs-6 me-1"></i>
+                                                {{ order.customer.mobile }}
+                                            </div>
+                                            {% if order.customer.email %}
+                                                <div class="text-gray-600">
+                                                    <i class="ki-outline ki-sms fs-6 me-1"></i>
+                                                    {{ order.customer.email }}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::Customer Card-->
+
+                            <!--begin::Subscription Card-->
+                            <div class="card card-flush">
+                                <div class="card-header">
+                                    <div class="card-title">
+                                        <h3 class="fw-bold m-0">Subscription Details</h3>
+                                    </div>
+                                </div>
+                                <div class="card-body pt-0">
+                                    <div class="d-flex flex-column gap-4">
+                                        <!--Category-->
+                                        <div>
+                                            <span class="text-gray-600 fs-7">Category:</span>
+                                            <div class="fw-bold text-gray-800">{{ order.category.name }}</div>
+                                        </div>
+
+                                        <!--Plan-->
+                                        <div>
+                                            <span class="text-gray-600 fs-7">Plan:</span>
+                                            <div class="fw-bold text-gray-800">{{ order.plan.name }}</div>
+                                        </div>
+
+                                        <!--Subscription Period-->
+                                        <div>
+                                            <span class="text-gray-600 fs-7">Subscription Period:</span>
+                                            <div class="text-gray-700">
+                                                {{ formatDateInTimezone(order.subscription.startDate) }} to 
+                                                {{ formatDateInTimezone(order.subscription.endDate) }}
+                                            </div>
+                                        </div>
+
+                                        <a href="/admin/subscription/edit/{{ order.subscription.id }}" class="btn btn-sm btn-light-primary">
+                                            View Subscription
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::Subscription Card-->
+                        </div>
+                        <!--end::Order Summary-->
+
+                        <!--begin::Order Items-->
+                        <div class="col-lg-8">
+                            <!--begin::Order Items Card-->
+                            <div class="card card-flush">
+                                <div class="card-header">
+                                    <div class="card-title">
+                                        <h3 class="fw-bold m-0">Order Items ({{ order.orderItems | length }})</h3>
+                                    </div>
+                                </div>
+                                <div class="card-body pt-0">
+                                    {% if order.orderItems and order.orderItems.length > 0 %}
+                                        <div class="table-responsive">
+                                            <table class="table table-row-bordered align-middle gy-4">
+                                                <thead>
+                                                    <tr class="fw-bold text-gray-700 bg-light">
+                                                        <th class="min-w-200px">Food Item</th>
+                                                        <th class="min-w-120px">Meal Type</th>
+                                                        <th class="min-w-150px">Delivery Location</th>
+                                                        {# <th class="min-w-100px">Qty</th>
+                                                        <th class="min-w-100px">Price</th> #}
+                                                        <th class="min-w-120px">Delivered</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for item in order.orderItems %}
+                                                        <tr>
+                                                            <td>
+                                                                <div class="d-flex flex-column">
+                                                                    <span class="fw-bold text-gray-800">{{ item.foodItem.name }}</span>
+                                                                    {% if item.notes %}
+                                                                        <span class="text-muted fs-7">Note: {{ item.notes }}</span>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="d-flex align-items-center">
+                                                                    {% if item.mealType.type == 'BREAKFAST' %}
+                                                                        <i class="ki-outline ki-coffee text-warning fs-4 me-2"></i>
+                                                                    {% elif item.mealType.type == 'LUNCH' %}
+                                                                        <i class="ki-outline ki-status text-success fs-4 me-2"></i>
+                                                                    {% elif item.mealType.type == 'DINNER' %}
+                                                                        <i class="ki-outline ki-night-day text-primary fs-4 me-2"></i>
+                                                                    {% endif %}
+                                                                    <span class="fw-semibold">{{ item.mealType.name }}</span>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="d-flex flex-column">
+                                                                    <span class="fw-semibold text-gray-800">{{ item.deliveryLocation.type }}-{{ item.deliveryLocation.name }}</span>
+                                                                    <span class="text-muted fs-7">{{ item.deliveryLocation.roomNumber }}, {{ item.deliveryLocation.buildingName }}</span>
+                                                                    <span class="text-muted fs-7">{{ item.deliveryLocation.area.name }}</span>
+                                                                </div>
+                                                            </td>
+                                                            {# <td>
+                                                                <span class="badge badge-light-info">{{ item.quantity | default(1) }}</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="fw-bold">₹{{ item.price | default(0) }}</span>
+                                                            </td> #}
+                                                            <td>
+                                                                {% if item.deliveredDate %}
+                                                                    <div class="d-flex flex-column">
+                                                                        <span class="badge badge-light-success mb-1">Delivered</span>
+                                                                        <span class="text-muted fs-7">{{ formatDateInTimezone(item.deliveredDate) }}</span>
+                                                                    </div>
+                                                                {% else %}
+                                                                    <span class="badge badge-light-warning">Pending</span>
+                                                                {% endif %}
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    {% else %}
+                                        <div class="text-center py-10">
+                                            <i class="ki-outline ki-file-deleted fs-3x text-gray-400 mb-3"></i>
+                                            <p class="text-gray-600">No order items found</p>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <!--end::Order Items Card-->
+
+                            <!--begin::Notes Card-->
+                            {% if order.notes %}
+                                <div class="card card-flush mt-6">
+                                    <div class="card-header">
+                                        <div class="card-title">
+                                            <h3 class="fw-bold m-0">Order Notes</h3>
+                                        </div>
+                                    </div>
+                                    <div class="card-body pt-0">
+                                        <div class="p-4 bg-light rounded">
+                                            <p class="text-gray-700 mb-0">{{ order.notes }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            <!--end::Notes Card-->
+                        </div>
+                        <!--end::Order Items-->
+                    </div>
+                </div>
+            </div>
+            <!--end::Content-->
+        </div>
+
+        <!--begin::Footer-->
+        {% include '../partials/_footer-panel.njk' %}
+        <!--end::Footer-->
+    </div>
+{% endblock %}
+
+{% block customScript %}
+    {# <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const cancelBtn = document.getElementById('cancel_order_btn');
+
+            if (cancelBtn) {
+                cancelBtn.addEventListener('click', function () {
+                    if (confirm('Are you sure you want to cancel this order?')) {
+                        fetch('/admin/order/cancel/{{ order.id }}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                            .then(res => res.json())
+                            .then(data => {
+                                if (data.success) {
+                                    toastr.success('Order cancelled successfully');
+                                    setTimeout(() => {
+                                        window
+                                            .location
+                                            .reload();
+                                    }, 1500);
+                                } else {
+                                    toastr.error(data.message || 'Failed to cancel order');
+                                }
+                            })
+                            .catch(err => {
+                                console.error(err);
+                                toastr.error('An error occurred');
+                            });
+                    }
+                });
+            }
+        });
+    </script> #}
+{% endblock %}

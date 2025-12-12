@@ -1,0 +1,192 @@
+{% extends "../layouts/master.njk" %}
+
+{% block container %}
+    <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+        <div class="d-flex flex-column flex-column-fluid">
+            <div id="kt_app_toolbar" class="app-toolbar pt-2 pt-lg-10">
+                <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex align-items-stretch">
+                    <div class="app-toolbar-wrapper d-flex flex-stack flex-wrap gap-4 w-100">
+                        <div class="page-title d-flex flex-column justify-content-center gap-1 me-3">
+                            <h1 class="fw-bold fs-3 m-0">
+                                {% if holiday %}Edit{% else %}Add{% endif %} Holiday
+                            </h1>
+                            <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0">
+                                <li class="breadcrumb-item text-muted">
+                                    <a href="/admin/dashboard" class="text-hover-primary">Home</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <span class="bullet bg-gray-500 w-5px h-2px"></span>
+                                </li>
+                                <li class="breadcrumb-item text-muted">
+                                    <a href="/admin/holiday" class="text-hover-primary">Holidays</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <span class="bullet bg-gray-500 w-5px h-2px"></span>
+                                </li>
+                                <li class="breadcrumb-item text-muted">
+                                    {% if holiday %}Edit{% else %}Add{% endif %}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--begin::Content-->
+            <div id="kt_app_content" class="app-content flex-column-fluid">
+                <div id="kt_app_content_container" class="app-container container-fluid">
+                    <form id="kt_holiday_form"
+                        action="/admin/holiday/save"
+                        data-redirect-url="/admin/holiday/"
+                        method="POST"
+                        class="es-form"
+                        novalidate>
+                        <input type="hidden" name="id" value="{{ holiday.id if holiday else '' }}">
+
+                        <div class="row g-7">
+
+                            <!-- Sidebar -->
+                            <div class="col-lg-4">
+                                <div class="card card-flush mb-7">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Holiday Type</h3>
+                                    </div>
+                                    <div class="card-body pt-0">
+                                        <div class="mb-5">
+                                            <label class="form-label required">Type</label>
+                                            <select name="type" id="holidayType" class="form-select form-select-solid" data-control="select2" required>
+                                                <option value="">Select type</option>
+                                                {% for type in enums.HolidayType %}
+                                                    <option value="{{ type }}"
+                                                     {% if holiday and holiday.type == type %}selected{% endif %}>
+                                                        {{ type | replace("_", " ") | title }}
+                                                    </option>
+                                                {% endfor %}
+                                            </select>
+                                            <div id="field-error-type" class="fv-plugins-message-container invalid-feedback"></div>
+                                            <div class="form-text text-muted mt-2">
+                                                <strong>Specific Date:</strong> One-time or annual holiday (e.g., New Year)<br>
+                                                <strong>Recurring Weekly:</strong> Repeats every week (e.g., Every Sunday)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card card-flush">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Status</h3>
+                                    </div>
+                                    <div class="card-body pt-0">
+                                        <div class="mb-5">
+                                            <label class="form-check form-switch form-check-custom form-check-solid">
+                                                <input class="form-check-input" type="checkbox" name="isActive" value="true"
+                                                   {% if not holiday or holiday.isActive %}checked{% endif %}/>
+                                                <span class="form-check-label fw-semibold">Active</span>
+                                            </label>
+                                            <div class="form-text text-muted mt-2">
+                                                Inactive holidays will not affect delivery schedules
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Main column -->
+                            <div class="col-lg-8">
+                                <div class="card card-flush mb-7">
+                                    <div class="card-header">
+                                        <h3 class="card-title">General Information</h3>
+                                    </div>
+                                    <div class="card-body pt-0">
+
+                                        <div class="mb-6">
+                                            <label class="form-label required">Holiday Name</label>
+                                            <input type="text" name="name" class="form-control form-control-solid"
+                                                placeholder="e.g., New Year, Weekend Closure"
+                                                value="{{ holiday.name if holiday else '' }}" required/>
+                                            <div id="field-error-name" class="fv-plugins-message-container invalid-feedback"></div>
+                                        </div>
+
+                                        <div class="mb-6">
+                                            <label class="form-label">Description</label>
+                                            <textarea name="description" class="form-control form-control-solid" rows="3" 
+                                                placeholder="Optional description for this holiday">{{ holiday.description if holiday else '' }}</textarea>
+                                            <div id="field-error-description" class="fv-plugins-message-container invalid-feedback"></div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <!-- Date Configuration -->
+                                <div class="card card-flush mb-7">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Specific Date</h3>
+                                    </div>
+                                    <div class="card-body pt-0">
+                                        <div class="mb-6">
+                                            <label class="form-label" id="dateLabel">Holiday Date</label>
+                                            <input type="text" name="date" id="holidayDate" class="form-control form-control-solid"
+                                                placeholder="Select holiday date"
+                                                value="{{ formatDateInTimezone(holiday.date, 'Asia/Dubai', 'yyyy-MM-dd') if holiday and holiday.date else '' }}"
+                                                readonly/>
+                                            <div id="field-error-date" class="fv-plugins-message-container invalid-feedback"></div>
+                                            <div class="form-text text-muted mt-2">
+                                                Select the specific date for this holiday
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Recurring Configuration -->
+                                <div class="card card-flush mb-7">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Recurring Weekly</h3>
+                                    </div>
+                                    <div class="card-body pt-0">
+                                        <div class="mb-6">
+                                            <label class="form-label" id="dayOfWeekLabel">Day of Week</label>
+                                            <select name="dayOfWeek" id="dayOfWeek" class="form-select form-select-solid" data-control="select2">
+                                                <option value="">Select day</option>
+                                                {% for day in enums.DayOfWeek %}
+                                                    <option value="{{ day }}"
+                                                     {% if holiday and holiday.dayOfWeek == day %}selected{% endif %}>
+                                                        {{ day | title }}
+                                                    </option>
+                                                {% endfor %}
+                                            </select>
+                                            <div id="field-error-dayOfWeek" class="fv-plugins-message-container invalid-feedback"></div>
+                                            <div class="form-text text-muted mt-2">
+                                                This holiday will repeat every week on the selected day
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Footer -->
+                                <div class="card-footer d-flex justify-content-end py-6 px-9">
+                                    <a href="/admin/holiday" class="btn btn-light btn-active-light-primary me-2">Cancel</a>
+                                    <button type="submit" class="btn btn-primary form-submit-btn" id="submit_btn">
+                                        <span class="indicator-label label">
+                                            {% if holiday %}Update{% else %}Create{% endif %} Holiday
+                                        </span>
+                                        <span class="preloader indicator-progress d-none">Please wait...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        {% include "../partials/_footer-panel.njk" %}
+    </div>
+{% endblock %}
+
+{% block customScript %}
+    <script src="/admin/custom/holiday-form.js"></script>
+    <script src="/admin/common/es-form.js"></script>
+    <script src="/admin/common/form-data-json.min.js"></script>
+{% endblock %}

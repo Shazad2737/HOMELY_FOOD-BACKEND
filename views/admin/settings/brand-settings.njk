@@ -1,0 +1,351 @@
+{% extends "../layouts/master.njk" %}
+
+{% block customCss %}
+    <link rel="stylesheet" href="/admin/article-editor/css/article-editor.min.css"/>
+{% endblock %}
+
+{% block container %}
+    <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+        <div class="d-flex flex-column flex-column-fluid">
+            <!--begin::Toolbar-->
+            <div id="kt_app_toolbar" class="app-toolbar pt-2 pt-lg-10">
+                <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex align-items-stretch">
+                    <div class="app-toolbar-wrapper d-flex flex-stack flex-wrap gap-4 w-100">
+                        <div class="page-title d-flex flex-column justify-content-center gap-1 me-3">
+                            <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bold fs-3 m-0">
+                                General Settings
+                            </h1>
+                            <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0">
+                                <li class="breadcrumb-item text-muted">
+                                    <a href="/admin/dashboard" class="text-muted text-hover-primary">Home</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <span class="bullet bg-gray-500 w-5px h-2px"></span>
+                                </li>
+                                <li class="breadcrumb-item text-muted">Settings</li>
+                                <li class="breadcrumb-item">
+                                    <span class="bullet bg-gray-500 w-5px h-2px"></span>
+                                </li>
+                                <li class="breadcrumb-item text-muted">General</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end::Toolbar-->
+
+            <!--begin::Content-->
+            <div id="kt_app_content" class="app-content flex-column-fluid">
+                <div id="kt_app_content_container" class="app-container container-fluid">
+                    <form id="kt_brand_settings_form"
+                        class="form es-form"
+                        action="/admin/settings/general/save"
+                        data-redirect-url="/admin/settings/general"
+                        method="POST"
+                        autocomplete="off">
+
+                        <input type="hidden" name="id" value="{{ settings.id if settings else '' }}">
+
+                        <!--begin::Ordering Settings-->
+                        <div class="card mb-5">
+                            <div class="card-header">
+                                <h3 class="card-title">Advance Order Settings</h3>
+                                <div class="card-toolbar">
+                                    <span class="badge badge-light-info">Configure order scheduling parameters</span>
+                                </div>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="row mb-6">
+                                    <label class="col-lg-4 col-form-label required fw-semibold fs-6">
+                                        Cutoff Hour
+                                        <span class="ms-1" data-bs-toggle="tooltip" 
+                                              title="Orders placed after this hour will be scheduled for the next available day (24-hour format)">
+                                            <i class="ki-outline ki-information-5 text-gray-500 fs-6"></i>
+                                        </span>
+                                    </label>
+                                    <div class="col-lg-8">
+                                        <div class="input-group input-group-solid">
+                                            <input type="number" 
+                                                   name="advanceOrderCutoffHour" 
+                                                   class="form-control form-control-lg form-control-solid" 
+                                                   placeholder="18" 
+                                                   value="{{ settings.advanceOrderCutoffHour if settings else '18' }}"
+                                                   min="0"
+                                                   max="23"
+                                                   required/>
+                                            <span class="input-group-text">:00</span>
+                                        </div>
+                                        <div class="form-text">Orders placed after this hour apply to next day (0-23)</div>
+                                        <div id="field-error-advanceOrderCutoffHour" class="fv-plugins-message-container invalid-feedback"></div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-6">
+                                    <label class="col-lg-4 col-form-label required fw-semibold fs-6">
+                                        Minimum Advance Days
+                                        <span class="ms-1" data-bs-toggle="tooltip" 
+                                              title="Minimum number of days in advance customers must place orders">
+                                            <i class="ki-outline ki-information-5 text-gray-500 fs-6"></i>
+                                        </span>
+                                    </label>
+                                    <div class="col-lg-8">
+                                        <div class="input-group input-group-solid">
+                                            <input type="number" 
+                                                   name="minAdvanceOrderDays" 
+                                                   class="form-control form-control-lg form-control-solid" 
+                                                   placeholder="1" 
+                                                   value="{{ settings.minAdvanceOrderDays if settings else '1' }}"
+                                                   min="0"
+                                                   max="30"
+                                                   required/>
+                                            <span class="input-group-text">days</span>
+                                        </div>
+                                        <div class="form-text">Set to 0 to allow same-day orders</div>
+                                        <div id="field-error-minAdvanceOrderDays" class="fv-plugins-message-container invalid-feedback"></div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-6">
+                                    <label class="col-lg-4 col-form-label required fw-semibold fs-6">
+                                        Maximum Advance Days
+                                        <span class="ms-1" data-bs-toggle="tooltip" 
+                                              title="Maximum number of days in advance customers can place orders">
+                                            <i class="ki-outline ki-information-5 text-gray-500 fs-6"></i>
+                                        </span>
+                                    </label>
+                                    <div class="col-lg-8">
+                                        <div class="input-group input-group-solid">
+                                            <input type="number" 
+                                                   name="maxAdvanceOrderDays" 
+                                                   class="form-control form-control-lg form-control-solid" 
+                                                   placeholder="7" 
+                                                   value="{{ settings.maxAdvanceOrderDays if settings else '7' }}"
+                                                   min="1"
+                                                   max="90"
+                                                   required/>
+                                            <span class="input-group-text">days</span>
+                                        </div>
+                                        <div class="form-text">How far in advance can customers order (1-90 days)</div>
+                                        <div id="field-error-maxAdvanceOrderDays" class="fv-plugins-message-container invalid-feedback"></div>
+                                    </div>
+                                </div>
+
+                                <!--begin::Alert-->
+                                <div class="alert alert-primary d-flex align-items-center p-5">
+                                    <i class="ki-outline ki-shield-tick fs-2hx text-primary me-4"></i>
+                                    <div class="d-flex flex-column">
+                                        <h4 class="mb-1 text-dark">Order Scheduling Example</h4>
+                                        <span>If cutoff is 18:00 (6 PM) and minimum advance is 1 day:<br/>
+                                        Orders placed before 6 PM can be for tomorrow.<br/>
+                                        Orders placed after 6 PM will start from the day after tomorrow.</span>
+                                    </div>
+                                </div>
+                                <!--end::Alert-->
+                            </div>
+                        </div>
+                        <!--end::Ordering Settings-->
+
+                        <!--begin::Contact Information-->
+                        <div class="card mb-5">
+                            <div class="card-header">
+                                <h3 class="card-title">Contact Information</h3>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="row mb-6">
+                                    <label class="col-lg-4 col-form-label fw-semibold fs-6">
+                                        WhatsApp Number
+                                        <span class="ms-1" data-bs-toggle="tooltip" title="WhatsApp contact for customer support">
+                                            <i class="ki-outline ki-information-5 text-gray-500 fs-6"></i>
+                                        </span>
+                                    </label>
+                                    <div class="col-lg-8">
+                                        <div class="input-group input-group-solid">
+                                            <span class="input-group-text">
+                                                <i class="ki-outline ki-whatsapp fs-2"></i>
+                                            </span>
+                                            <input type="text" 
+                                                   name="whatsappNumber" 
+                                                   class="form-control form-control-lg form-control-solid" 
+                                                   placeholder="e.g., +971501234567" 
+                                                   value="{{ settings.whatsappNumber if settings and settings.whatsappNumber else '' }}"/>
+                                        </div>
+                                        <div class="form-text">Include country code (e.g., +971 for UAE)</div>
+                                        <div id="field-error-whatsappNumber" class="fv-plugins-message-container invalid-feedback"></div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-6">
+                                    <label class="col-lg-4 col-form-label fw-semibold fs-6">
+                                        Phone Number
+                                        <span class="ms-1" data-bs-toggle="tooltip" title="Primary phone contact">
+                                            <i class="ki-outline ki-information-5 text-gray-500 fs-6"></i>
+                                        </span>
+                                    </label>
+                                    <div class="col-lg-8">
+                                        <div class="input-group input-group-solid">
+                                            <span class="input-group-text">
+                                                <i class="ki-outline ki-phone fs-2"></i>
+                                            </span>
+                                            <input type="text" 
+                                                   name="phoneNumber" 
+                                                   class="form-control form-control-lg form-control-solid" 
+                                                   placeholder="e.g., +971501234567" 
+                                                   value="{{ settings.phoneNumber if settings and settings.phoneNumber else '' }}"/>
+                                        </div>
+                                        <div class="form-text">Include country code</div>
+                                        <div id="field-error-phoneNumber" class="fv-plugins-message-container invalid-feedback"></div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-6">
+                                    <label class="col-lg-4 col-form-label fw-semibold fs-6">
+                                        Help Center URL
+                                        <span class="ms-1" data-bs-toggle="tooltip" title="Link to support documentation or help center">
+                                            <i class="ki-outline ki-information-5 text-gray-500 fs-6"></i>
+                                        </span>
+                                    </label>
+                                    <div class="col-lg-8">
+                                        <div class="input-group input-group-solid">
+                                            <span class="input-group-text">
+                                                <i class="ki-outline ki-support-24 fs-2"></i>
+                                            </span>
+                                            <input type="url" 
+                                                   name="helpCenterUrl" 
+                                                   class="form-control form-control-lg form-control-solid" 
+                                                   placeholder="https://help.example.com" 
+                                                   value="{{ settings.helpCenterUrl if settings and settings.helpCenterUrl else '' }}"/>
+                                        </div>
+                                        <div class="form-text">Full URL to your help center or FAQ page</div>
+                                        <div id="field-error-helpCenterUrl" class="fv-plugins-message-container invalid-feedback"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Contact Information-->
+
+                        <!--begin::Terms & Conditions-->
+                        <div class="card mb-5">
+                            <div class="card-header">
+                                <h3 class="card-title">Terms & Conditions</h3>
+                                <div class="card-toolbar">
+                                    <span class="badge badge-light-warning">Legal & Policy Content</span>
+                                </div>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="row mb-6">
+                                    <label class="col-lg-4 col-form-label fw-semibold fs-6">
+                                        Terms & Conditions
+                                        <span class="ms-1" data-bs-toggle="tooltip" 
+                                            title="Legal terms and conditions for your service">
+                                            <i class="ki-outline ki-information-5 text-gray-500 fs-6"></i>
+                                        </span>
+                                    </label>
+                                    <div class="col-lg-8">
+                                        <textarea class="form-control page_builder_content" 
+                                                name="termsAndConditions" 
+                                                rows="10"
+                                                placeholder="Enter your terms and conditions here...">{{ settings.termsAndConditions if settings and settings.termsAndConditions else '' }}</textarea>
+                                        <div class="form-text">This content will be displayed to customers</div>
+                                        <div id="field-error-termsAndConditions" class="fv-plugins-message-container invalid-feedback"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Terms & Conditions-->
+
+                        <!--begin::Privacy Policy-->
+                        <div class="card mb-5">
+                            <div class="card-header">
+                                <h3 class="card-title">Privacy Policy</h3>
+                                <div class="card-toolbar">
+                                    <span class="badge badge-light-warning">Legal & Policy Content</span>
+                                </div>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="row mb-6">
+                                    <label class="col-lg-4 col-form-label fw-semibold fs-6">
+                                        Privacy Policy
+                                        <span class="ms-1" data-bs-toggle="tooltip" 
+                                            title="Privacy policy for your service">
+                                            <i class="ki-outline ki-information-5 text-gray-500 fs-6"></i>
+                                        </span>
+                                    </label>
+                                    <div class="col-lg-8">
+                                        <textarea class="form-control page_builder_content" 
+                                                name="privacyPolicy" 
+                                                rows="10"
+                                                placeholder="Enter your privacy policy here...">{{ settings.privacyPolicy if settings and settings.privacyPolicy else '' }}</textarea>
+                                        <div class="form-text">This content will be displayed to customers</div>
+                                        <div id="field-error-privacyPolicy" class="fv-plugins-message-container invalid-feedback"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Privacy Policy-->
+
+                        <!--begin::System Settings-->
+                        <div class="card mb-5">
+                            <div class="card-header">
+                                <h3 class="card-title">System Settings</h3>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="row mb-6">
+                                    <label class="col-lg-4 col-form-label fw-semibold fs-6">
+                                        Settings Active
+                                        <span class="ms-1" data-bs-toggle="tooltip" title="Enable or disable these settings">
+                                            <i class="ki-outline ki-information-5 text-gray-500 fs-6"></i>
+                                        </span>
+                                    </label>
+                                    <div class="col-lg-8">
+                                        <div class="form-check form-switch form-check-custom form-check-solid">
+                                            <input class="form-check-input" type="checkbox" 
+                                                   name="isActive" 
+                                                   value="true"
+                                                   id="isActive"
+                                                   {% if not settings or settings.isActive %}checked{% endif %}/>
+                                            <label class="form-check-label text-gray-600" for="isActive">
+                                                Activate settings
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::System Settings-->
+
+                        <!--begin::Actions-->
+                        <div class="card">
+                            <div class="card-footer d-flex justify-content-end py-6 px-9">
+                                <a href="/admin/dashboard" class="btn btn-light btn-active-light-primary me-2">Cancel</a>
+                                <button type="submit" class="btn btn-primary form-submit-btn" id="submit_btn">
+                                    <span class="indicator-label label">Save Settings</span>
+                                    <span class="preloader indicator-progress d-none">Please wait...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                        <!--end::Actions-->
+                    </form>
+                </div>
+            </div>
+            <!--end::Content-->
+        </div>
+
+        <!--begin::Footer-->
+        {% include '../partials/_footer-panel.njk' %}
+        <!--end::Footer-->
+    </div>
+{% endblock %}
+
+{% block customScript %}
+    <script src="/admin/common/es-form.js"></script>
+    <script src="/admin/common/form-data-json.min.js"></script>
+    <script src="/admin/article-editor/article-editor.min.js"></script>
+    <script src="/admin/custom/general-settings.js"></script>
+{% endblock %}

@@ -1,0 +1,303 @@
+{% extends "../layouts/master.njk" %}
+{% block container %}
+    <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+        <div class="d-flex flex-column flex-column-fluid">
+            <div id="kt_app_toolbar" class="app-toolbar pt-2 pt-lg-10">
+                <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex align-items-stretch">
+                    <div class="app-toolbar-wrapper d-flex flex-stack flex-wrap gap-4 w-100">
+                        <div class="page-title d-flex flex-column justify-content-center gap-1 me-3">
+                            <h1 class="fw-bold fs-3 m-0">
+                                {% if foodItem %}Edit{% else %}Add{% endif %}
+                                Food Item
+                            </h1>
+                            <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0">
+                                <li class="breadcrumb-item text-muted">
+                                    <a href="/admin/dashboard" class="text-hover-primary">Home</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <span class="bullet bg-gray-500 w-5px h-2px"></span>
+                                </li>
+                                <li class="breadcrumb-item text-muted">
+                                    <a href="/admin/fooditem" class="text-hover-primary">Food Items</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <span class="bullet bg-gray-500 w-5px h-2px"></span>
+                                </li>
+                                <li class="breadcrumb-item text-muted">
+                                    {% if foodItem %}Edit{% else %}Add{% endif %}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--begin::Content-->
+            <div id="kt_app_content" class="app-content flex-column-fluid">
+                <div id="kt_app_content_container" class="app-container container-fluid">
+                    <form
+                        id="kt_fooditem_form"
+                        action="/admin/fooditem/save"
+                        data-redirect-url="/admin/fooditem/"
+                        method="POST"
+                        class="es-form"
+                        novalidate>
+                        <input type="hidden" name="id" value="{{ foodItem.id }}">
+                            <input type="hidden" name="selectAllAreas" id="selectAllAreasHidden" value="false">
+                                <div
+                                    class="row g-7">
+                                    <!-- Sidebar -->
+                                    <div class="col-lg-4">
+                                        <div class="card card-flush mb-7">
+                                            <div class="card-header">
+                                                <h3 class="card-title">Image</h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="mb-6 text-center">
+                                                    <div class="dropzone dropzone-single" id="foodItemImageDropzone">
+                                                        <div class="dz-message needsclick">
+                                                            <i class="ki-outline ki-file-up text-primary fs-3x"></i>
+                                                            <div class="ms-4">
+                                                                <h3 class="fs-5 fw-bold text-gray-900 mb-1">
+                                                                    Drop food item image here or click to upload.
+                                                                </h3>
+                                                                <span class="fs-7 fw-semibold text-gray-500">
+                                                                    Only one image allowed
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Hidden input for storing uploaded image URL -->
+                                                    <input type="hidden" name="imageUrl" id="foodItemImageUrl" value="{{ foodItem and foodItem.imageUrl or '' }}">
+                                                        <div id="field-error-imageUrl" class="fv-plugins-message-container invalid-feedback"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card card-flush">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">Food Type</h3>
+                                                </div>
+                                                <div class="card-body pt-0">
+                                                    <div class="mb-5">
+                                                        <label class="form-check form-check-custom form-check-solid">
+                                                            <input class="form-check-input" type="checkbox" name="isVegetarian" value="true" {% if foodItem and foodItem.isVegetarian %} checked {% endif %}/>
+                                                            <span class="form-check-label fw-semibold">Vegetarian</span>
+                                                        </label>
+                                                    </div>
+                                                    <div>
+                                                        <label class="form-check form-check-custom form-check-solid">
+                                                            <input class="form-check-input" type="checkbox" name="isVegan" value="true" {% if foodItem and foodItem.isVegan %} checked {% endif %}/>
+                                                            <span class="form-check-label fw-semibold">Vegan</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Main column -->
+                                        <div class="col-lg-8">
+                                            <div class="card card-flush mb-7">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">General Information</h3>
+                                                </div>
+                                                <div class="card-body pt-0">
+                                                    <div class="row mb-6">
+                                                        <div class="col-md-6">
+                                                            <label class="form-label required">Food Item Name</label>
+                                                            <input type="text" name="name" class="form-control form-control-solid" placeholder="Enter food item name" value="{{ foodItem.name if foodItem else '' }}" required/>
+                                                            <div id="field-error-name" class="fv-plugins-message-container invalid-feedback"></div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label class="form-label required">Code</label>
+                                                            <input type="text" name="code" class="form-control form-control-solid" placeholder="e.g., b505" value="{{ foodItem.code if foodItem else '' }}" required/>
+                                                            <div id="field-error-code" class="fv-plugins-message-container invalid-feedback"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-6">
+                                                        <label class="form-label">Description</label>
+                                                        <textarea name="description" class="form-control form-control-solid" rows="3">{{ foodItem.description if foodItem else '' }}</textarea>
+                                                    </div>
+                                                    <div class="row mb-6">
+                                                        <div class="col-md-6">
+                                                            <label class="form-label required">Meal Type</label>
+                                                            <select name="mealTypeId" class="form-select form-select-solid" data-control="select2" required>
+                                                                <option value="">Select meal type</option>
+                                                                {% for type in mealTypes %}
+                                                                    <option value="{{ type.id }}" {% if foodItem and foodItem.mealTypeId == type.id %} selected {% endif %}>
+                                                                        {{ type.name }}
+                                                                    </option>
+                                                                {% endfor %}
+                                                            </select>
+                                                            <div id="field-error-mealTypeId" class="fv-plugins-message-container invalid-feedback"></div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label class="form-label required">Category</label>
+                                                            <select name="categoryId" class="form-select form-select-solid" data-control="select2" required>
+                                                                <option value="">Select category</option>
+                                                                {% for cat in categories %}
+                                                                    <option value="{{ cat.id }}" {% if foodItem and foodItem.categoryId == cat.id %} selected {% endif %}>
+                                                                        {{ cat.name }}
+                                                                    </option>
+                                                                {% endfor %}
+                                                            </select>
+                                                            <div id="field-error-categoryId" class="fv-plugins-message-container invalid-feedback"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-6">
+                                                        <div class="col-md-6">
+                                                            <label class="form-label required">Cuisine</label>
+                                                            <input type="text" name="cuisine" class="form-control form-control-solid" value="{{ foodItem.cuisine if foodItem else '' }}" placeholder="Enter cuisine" required/>
+                                                            <div id="field-error-cuisine" class="fv-plugins-message-container invalid-feedback"></div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label class="form-label required">Food Style</label>
+                                                            <input type="text" name="style" class="form-control form-control-solid" value="{{ foodItem.style if foodItem else '' }}" placeholder="Enter food style" required/>
+                                                            <div id="field-error-style" class="fv-plugins-message-container invalid-feedback"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-6">
+                                                        <div class="col-md-6">
+                                                            <label class="form-label">Price</label>
+                                                            <input type="number" name="price" class="form-control form-control-solid" placeholder="0.00" step="0.01" value="{{ foodItem.price if foodItem else '' }}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Delivery Configuration -->
+                                            <div class="card card-flush mb-7">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">Delivery Configuration</h3>
+                                                </div>
+                                                <div class="card-body pt-0">
+                                                    <div class="mb-6">
+                                                        <label class="form-label required">Delivery Mode</label>
+                                                        <select name="deliveryMode" id="deliveryMode" class="form-select form-select-solid" data-control="select2" required>
+                                                            <option value="">Select Delivery Mode</option>
+                                                            {% for mode in enums.DeliveryMode %}
+                                                                <option value="{{ mode }}" {% if foodItem and foodItem.deliveryMode == mode %} selected {% elif not foodItem and mode == 'SEPARATE' %} selected {% endif %}>
+                                                                    {{ mode }}
+                                                                </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                        <div id="field-error-deliveryMode" class="fv-plugins-message-container invalid-feedback"></div>
+                                                    </div>
+                                                    <div class="mb-6" id="deliverWithContainer" style="display: none;">
+                                                        <label class="form-label">Deliver With Meal Type</label>
+                                                        <select name="deliverWithId" id="deliverWithId" class="form-select form-select-solid" data-control="select2">
+                                                            <option value="">Select meal type</option>
+                                                            {% for type in mealTypes %}
+                                                                <option value="{{ type.id }}" {% if foodItem and foodItem.deliverWithId == type.id %} selected {% endif %}>
+                                                                    {{ type.name }}
+                                                                </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                        <div id="field-error-deliverWithId" class="fv-plugins-message-container invalid-feedback"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Availability -->
+                                            <div class="card card-flush mb-7">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">Availability</h3>
+                                                </div>
+                                                <div class="card-body pt-0">
+                                                    <div id="weeklyHolidayData" data-holidays='{{ recurringWeeklyHolidays | dump }}'></div>
+                                                    <div class="mb-6">
+                                                        <label class="form-label required">Available Days</label>
+                                                        <div
+                                                            class="d-flex flex-wrap align-items-center gap-5">
+                                                            <!-- Select All button INSIDE Available Days row -->
+                                                            <button type="button" id="selectWorkingDaysBtn" class="btn btn-sm btn-light-primary">
+                                                                Select All Working Days
+                                                            </button>
+                                                            <!-- Days checkboxes -->
+                                                            <div class="d-flex flex-wrap gap-5">
+                                                                {% set selectedDays = [] %}
+                                                                {% if foodItem and foodItem.availableDays %}
+                                                                    {% for d in foodItem.availableDays %}
+                                                                        {% set selectedDays = selectedDays.concat([d.dayOfWeek]) %}
+                                                                    {% endfor %}
+                                                                {% endif %}
+                                                                {% for day in enums.DayOfWeek %}
+                                                                    <label class="form-check form-check-custom form-check-solid">
+                                                                        <input class="form-check-input" type="checkbox" name="availableDays[]" value="{{ day }}" {% if day in selectedDays %} checked {% endif %}/>
+                                                                        <span class="form-check-label fw-semibold">{{ day | title }}</span>
+                                                                    </label>
+                                                                {% endfor %}
+                                                            </div>
+                                                        </div>
+                                                        <div id="field-error-availableDays" class="fv-plugins-message-container invalid-feedback"></div>
+                                                    </div>
+                                                    <div class="mb-6">
+                                                        <label class="form-label required">Available for Plans</label>
+                                                        <div class="d-flex flex-wrap gap-5">
+                                                            {% set selectedPlanIds = foodItem and foodItem.selectedPlanIds or[] %}
+                                                            <select class="form-select form-select-solid" data-control="select2" multiple data-close-on-select="false" name="planIds[]" id="fooditem_plans" data-placeholder="Select plans" required data-selected-id="{{ foodItem.selectedPlanIds | dump if foodItem }}"></select>
+                                                        </div>
+                                                        <div id="field-error-planIds" class="fv-plugins-message-container invalid-feedback"></div>
+                                                    </div>
+                                                    <div class="mb-6">
+                                                        <label class="form-label fw-semibold fs-6 required">Areas</label>
+                                                        <!-- Select All Checkbox -->
+                                                        <div class="form-check form-check-custom form-check-solid mb-3">
+                                                            <input class="form-check-input" type="checkbox" id="selectAllAreasCheckbox"/>
+                                                            <label class="form-check-label fw-semibold text-gray-700" for="selectAllAreasCheckbox">
+                                                                Select All Areas
+                                                            </label>
+                                                        </div>
+                                                        <select
+                                                            class="form-select form-select-solid"
+                                                            data-control="select2"
+                                                            data-placeholder="Select areas"
+                                                            data-allow-clear="true"
+                                                            multiple
+                                                            data-close-on-select="false"
+                                                            name="areaIds[]"
+                                                            id="fooditem_areas"
+                                                            required>
+                                                            <option></option>
+                                                            {% set selectedAreas = [] %}
+                                                            {% if foodItem and foodItem.selectedAreaIds %}
+                                                                {% set selectedAreas = foodItem.selectedAreaIds %}
+                                                            {% endif %}
+                                                            {% for area in areas %}
+                                                                <option value="{{ area.id }}" {% if area.id in selectedAreas %} selected {% endif %}>
+                                                                    {{ area.name }}
+                                                                    {% if area.location %}
+                                                                        ({{ area.location.name }}){% endif %}
+                                                                </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                        <div class="form-text">Select one or more areas for this food item, or select all</div>
+                                                        <div id="field-error-areaIds" class="fv-plugins-message-container invalid-feedback"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Footer -->
+                                            <div class="card-footer d-flex justify-content-end py-6 px-9">
+                                                <a href="/admin/fooditem" class="btn btn-light btn-active-light-primary me-2">Cancel</a>
+                                                <button type="submit" class="btn btn-primary form-submit-btn" id="submit_btn">
+                                                    <span class="indicator-label label">
+                                                        {% if foodItem %}Update{% else %}Create{% endif %}
+                                                        Food Item</span>
+                                                    <span class="preloader indicator-progress d-nones">Please wait...
+                                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                                    </span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    {% include "../partials/_footer-panel.njk" %}
+                </div>
+            {% endblock %}
+            {% block customScript %}
+                <script src="/admin/custom/fooditem-form.js"></script>
+                <script src="/admin/common/es-form.js"></script>
+                <script src="/admin/common/form-data-json.min.js"></script>
+                <script src="/admin/common/single-image-dropzone.js"></script>
+                <script src="/admin/custom/food-item-image-dropzone.js"></script>
+                <script src="/admin/custom/select-all-areas.js"></script>
+                <script src="/admin/custom/fooditem-delivery-config.js"></script>
+            {% endblock %}

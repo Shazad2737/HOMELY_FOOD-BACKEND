@@ -1,0 +1,96 @@
+{% if storageCountries.length == 1 %}
+    <!--begin::Menu-->
+    <div class="menu menu-rounded menu-column menu-gray-600 menu-state-bg fw-semibold w-250px" data-kt-menu="true">
+        <!--begin::Menu item-->
+        <div class="menu-item" data-kt-menu-trigger="hover" data-kt-menu-placement="right-start">
+            <!--begin::Menu link-->
+            <a href="#" class="menu-link py-3">
+                <span class="menu-icon">
+                    <i class="ki-duotone ki-geolocation fs-3"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></i>
+                </span>
+                <span class="menu-title">Choose Location</span>
+                <span class="menu-arrow"></span>
+            </a>
+            <!--end::Menu link-->
+
+            <!--begin::Menu sub-->
+            <div class="menu-sub menu-sub-dropdown p-3 w-200px">
+                {% for location in storageCountries[0].storageLocations %}
+                    <!--begin::Menu item-->
+                    <div class="menu-item">
+                        <a href="/admin/switch-location?location={{location._id}}&country={{storageCountries[0]._id}}" class="menu-link px-1 py-3">
+                            <span class="menu-bullet me-0">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">{{location.name.en}}</span>
+                        </a>
+                    </div>
+                    <!--end::Menu item-->
+                {% else %}
+                        <div class="menu-item px-3">
+                            {% if authAdmin.role == 'SUPER_ADMIN' %}
+                                <a href="/admin/location/add?country={{storageCountries[0]._id}}" class="menu-link px-3">
+                                    Add location
+                                </a>
+                            {% else %}
+                                No locations found
+                            {% endif %}
+                        </div>
+                {% endfor %}
+            </div>
+            <!--end::Menu sub-->
+        </div>
+        <!--end::Menu item-->
+    </div>
+    <!--end::Menu-->
+{% else %}
+<!--begin::Menu wrapper-->
+<div>
+    <!--begin::Toggle-->
+    <button type="button" class="btn btn-primary rotate" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start" data-kt-menu-offset="30px, 30px">
+        Choose Location
+    </button>
+    <!--end::Toggle-->
+        <!--begin::Menu-->
+        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold  min-w-200 mw-200px" data-kt-menu="true"> {#w-auto#}
+            {% for country in storageCountries %}
+                <!--begin::Menu item-->
+                <div class="menu-item px-3 my-2 mx-5 " data-kt-menu-trigger="hover" data-kt-menu-placement="right-start">
+                    <!--begin::Menu item-->
+                    <a href="#" class="menu-link px-3">
+                        <span class="menu-title">{{country.name.en}}</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <!--end::Menu item-->
+
+                    <!--begin::Menu sub-->
+                    <div class="menu-sub menu-sub-dropdown w-175px py-4">
+                        {% for location in country.storageLocations %}
+                            <!--begin::Menu item-->
+                            <div class="menu-item px-3">
+                                <a href="/admin/switch-location?location={{location._id}}&country={{country._id}}" class="menu-link px-3">
+                                    {{location.name.en}}
+                                </a>
+                            </div>
+                            <!--end::Menu item-->
+                        {% else %}
+                            <div class="menu-item px-3">
+                                {% if authAdmin.role == 'SUPER_ADMIN' %}
+                                    <a href="/admin/location/add?country={{country._id}}" class="menu-link px-3">
+                                        Add location
+                                    </a>
+                                {% else %}
+                                    No locations found
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <!--end::Menu sub-->
+                </div>
+                <!--end::Menu item-->
+            {% endfor %}
+        </div>
+        <!--end::Menu-->
+</div>
+<!--end::Dropdown wrapper-->
+{% endif %}
