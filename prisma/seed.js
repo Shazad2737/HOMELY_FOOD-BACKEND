@@ -1,4 +1,4 @@
-import { PrismaClient, MealTypeEnum, AdminRole } from '@prisma/client'
+import { AdminRole, MealTypeEnum, PrismaClient } from '@prisma/client'
 import * as bcrypt from 'bcrypt'
 import dotenv from 'dotenv'
 
@@ -88,14 +88,14 @@ const SEED_DATA = {
         ],
     },
     brand: {
-        name: 'Insta Mess',
+        name: 'Homely',
         code: 'IMSS001',
         description: 'Premium food delivery service in UAE',
-        contactEmail: 'brand@instamess.com',
+        contactEmail: 'brand@homely.com',
         contactPhone: '+971-84-8423678',
     },
     superAdmin: {
-        email: process.env.SUPER_ADMIN_EMAIL || 'admin@instamess.com',
+        email: process.env.SUPER_ADMIN_EMAIL || 'admin@homely.com',
         name: 'Super Administrator',
         password: process.env.SUPER_ADMIN_PASSWORD || 'ChangeThisPassword123!',
     },

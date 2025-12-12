@@ -1,4 +1,4 @@
-# 🍽️ Insta Mess Backend
+# 🍽️ Homely Backend
 
 A **Node.js + Express + Prisma** backend for managing mess operations and subscriptions.  
 Built with best practices for scalability, security, and maintainability.
@@ -21,8 +21,8 @@ Built with best practices for scalability, security, and maintainability.
 ### Steps
 ```bash
 # 1. Clone & Install
-git clone https://github.com/ioticsme/insta-mess-backend.git
-cd insta-mess-backend
+git clone https://github.com/chappanme/homely-backend.git
+cd homely-backend
 npm install
 
 # 2. Setup Environment

@@ -8,7 +8,7 @@ export const envConfig = {
         APP_KEY: process.env.APP_KEY || 'default_app_key',
         NODE_ENV: process.env.NODE_ENV || 'development',
         CLIENT_URL: process.env.CLIENT_URL || 'http://localhost:3000',
-        CLIENT_NAME: process.env.CLIENT_NAME || 'Insta Mess',
+        CLIENT_NAME: process.env.CLIENT_NAME || 'Homely',
         BRAND_CODE: process.env.BRAND_CODE || 'IMS001',
         DEFAULT_TIMEZONE: process.env.DEFAULT_TIMEZONE || 'Asia/Dubai',
         SESSION_MAX_AGE: Number(process.env.SESSION_MAX_AGE) || 720,
@@ -33,7 +33,7 @@ export const envConfig = {
     cache: {
         REDIS_URL: process.env.REDIS_URL,
         ACTIVE: process.env.CACHE_LOCAL_DATA || true,
-        KEY_PREFIX: process.env.REDIS_KEY_PREFIX || 'instamess',
+        KEY_PREFIX: process.env.REDIS_KEY_PREFIX || 'homely',
         EXPIRY: Number(process.env.REDIS_EXPIRY) || 1440,
 
         JWT_TOKEN_EXPIRY_SECONDS:
