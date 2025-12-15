@@ -117,6 +117,7 @@
 import http from 'http'
 import app from './app.js'
 import { connectDB, disconnectDB } from './config/database.js'
+import { connectRedis } from './config/redis.js'
 import { envConfig } from './config/env.js'
 import { logger } from './src/utils/logger.js'
 
@@ -169,6 +170,9 @@ logger.info('🚀 Application Booting...', {
 
 const startServer = async () => {
     try {
+        // Connect Redis first
+        await connectRedis()
+
         console.log('process.env.DATABASE_URL', process.env.DATABASE_URL)
         // Connect Database
         await connectDB()

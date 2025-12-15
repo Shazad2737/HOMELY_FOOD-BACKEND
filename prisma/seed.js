@@ -8,10 +8,10 @@ const prisma = new PrismaClient()
 // === CONFIGURABLE SEED DATA ===
 const SEED_DATA = {
     country: {
-        name: 'United Arab Emirates',
-        code: 'AE',
-        currency: 'AED',
-        timezone: 'Asia/Dubai',
+        name: 'India',
+        code: 'IN',
+        currency: 'INR',
+        timezone: 'Asia/Kolkata',
     },
     mealTypes: [
         {
@@ -41,58 +41,58 @@ const SEED_DATA = {
     ],
     locations: [
         {
-            name: 'Abu Dhabi',
-            code: 'AUH',
+            name: 'Kannur',
+            code: 'KAN',
             latitude: '24.4539',
             longitude: '54.3773',
         },
         {
-            name: 'Dubai',
-            code: 'DXB',
+            name: 'Eranakulam',
+            code: 'KOC',
             latitude: '25.2048',
             longitude: '55.2708',
         },
         {
-            name: 'Sharjah',
-            code: 'SHJ',
+            name: 'Calicut',
+            code: 'CLT',
             latitude: '25.3573',
             longitude: '55.4033',
         },
     ],
     areas: {
-        'Abu Dhabi': [
-            { name: 'Al Wahda', latitude: '24.4764', longitude: '54.3705' },
+        'Kannur': [
+            { name: 'Thalassery', latitude: '24.4764', longitude: '54.3705' },
             {
-                name: 'Al Khalidiyah',
+                name: 'Kannur',
                 latitude: '24.4707',
                 longitude: '54.3513',
             },
             {
-                name: 'Al Reem Island',
+                name: 'Kuthuparamb',
                 latitude: '24.4987',
                 longitude: '54.4085',
             },
         ],
-        Dubai: [
-            { name: 'Dubai Marina', latitude: '25.0805', longitude: '55.1403' },
+        'Calicut': [
+            { name: 'Calicut', latitude: '25.0805', longitude: '55.1403' },
             {
-                name: 'Downtown Dubai',
+                name: 'Vadakara',
                 latitude: '25.1972',
                 longitude: '55.2744',
             },
-            { name: 'Jumeirah', latitude: '25.2295', longitude: '55.2585' },
+            { name: 'Koyilandi', latitude: '25.2295', longitude: '55.2585' },
         ],
-        Sharjah: [
-            { name: 'Al Majaz', latitude: '25.3213', longitude: '55.3773' },
-            { name: 'Al Nahda', latitude: '25.2985', longitude: '55.3685' },
+        'Eranakulam': [
+            { name: 'Kochi', latitude: '25.3213', longitude: '55.3773' },
+            { name: 'Vyppin', latitude: '25.2985', longitude: '55.3685' },
         ],
     },
     brand: {
         name: 'Homely',
-        code: 'IMSS001',
-        description: 'Premium food delivery service in UAE',
+        code: 'HM001',
+        description: 'Homely food delivery service in Kerala',
         contactEmail: 'brand@homely.com',
-        contactPhone: '+971-84-8423678',
+        contactPhone: '+91-9999999999',
     },
     superAdmin: {
         email: process.env.SUPER_ADMIN_EMAIL || 'admin@homely.com',

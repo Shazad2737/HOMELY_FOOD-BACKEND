@@ -14,7 +14,12 @@ redisClient.on('ready', () => {
     logger.info('✅ Redis client is ready')
 })
 
-await redisClient.connect()
+// Export a function to connect Redis - call this during server startup
+export const connectRedis = async () => {
+    if (!redisClient.isOpen) {
+        await redisClient.connect()
+    }
+}
 
 /**
  * Get data from cache
