@@ -2,6 +2,7 @@ import { envConfig } from '../config/env.js'
 import logger from '../src/utils/logger.js'
 import { twilioService } from './twilio.adaptor.js'
 import { smsCountryService } from './smsCountry.adaptor.js'
+import { consoleService } from './console.adaptor.js'
 
 class MessageServiceAdaptor {
     constructor() {
@@ -10,9 +11,17 @@ class MessageServiceAdaptor {
     }
 
     initializeProvider() {
-        const providerType = envConfig.general?.SMS_PROVIDER
+        const providerType = envConfig.general?.SMS_PROVIDER || 'CONSOLE'
 
         switch (providerType.toUpperCase()) {
+            case 'CONSOLE':
+            case 'DEV':
+            case 'LOG':
+                this.provider = consoleService
+                logger.info(
+                    '📱 SMS Provider: CONSOLE (OTPs will be logged, not sent)'
+                )
+                break
             case 'TWILIO':
                 this.provider = twilioService
                 break
@@ -21,9 +30,9 @@ class MessageServiceAdaptor {
                 this.provider = smsCountryService
                 break
             default:
-                this.provider = twilioService
+                this.provider = consoleService
                 logger.warn(
-                    `Unknown messaging provider: ${providerType}. Defaulting to Twilio.`
+                    `Unknown messaging provider: ${providerType}. Defaulting to CONSOLE.`
                 )
         }
 

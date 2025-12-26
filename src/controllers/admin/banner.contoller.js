@@ -17,12 +17,12 @@ export const renderAddEditBanner = async (req, res) => {
 
     const banner = isEdit
         ? await prisma.banner.findUnique({
-              where: { id },
-              include: {
-                  images: { orderBy: { sortOrder: 'asc' } },
-                  brand: true,
-              },
-          })
+            where: { id },
+            include: {
+                images: { orderBy: { sortOrder: 'asc' } },
+                brand: true,
+            },
+        })
         : null
 
     if (isEdit && !banner) {
@@ -211,9 +211,8 @@ export const toggleBannerStatus = async (req, res) => {
 
     return res.json({
         success: true,
-        message: `Banner ${
-            !banner.isActive ? 'activated' : 'deactivated'
-        } successfully`,
+        message: `Banner ${!banner.isActive ? 'activated' : 'deactivated'
+            } successfully`,
     })
 }
 

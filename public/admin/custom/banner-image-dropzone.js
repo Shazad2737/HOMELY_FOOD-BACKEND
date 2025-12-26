@@ -52,9 +52,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="card mb-4" data-image-index="${index}">
                     <div class="card-body">
                         <div class="d-flex align-items-center mb-4">
-                            <img src="${img.url}" alt="Image ${
-                index + 1
-            }" style="width: 80px; height: 80px; object-fit: cover; border-radius: 4px;">
+                            <img src="${img.url}" alt="Image ${index + 1
+                }" style="width: 80px; height: 80px; object-fit: cover; border-radius: 4px;">
                             <div class="ms-4 flex-grow-1">
                                 <h5 class="mb-0">Image ${index + 1}</h5>
                             </div>
@@ -64,16 +63,14 @@ document.addEventListener('DOMContentLoaded', function () {
                             <div class="col-md-6">
                                 <label class="form-label">Redirect URL</label>
                                 <input type="text" class="form-control" name="images[${index}][redirectUrl]" 
-                                       value="${
-                                           img.redirectUrl || ''
-                                       }" placeholder="https://example.com">
+                                       value="${img.redirectUrl || ''
+                }" placeholder="https://example.com">
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Caption</label>
                                 <input type="text" class="form-control" name="images[${index}][caption]" 
-                                       value="${
-                                           img.caption || ''
-                                       }" placeholder="Image caption">
+                                       value="${img.caption || ''
+                }" placeholder="Image caption">
                             </div>
                         </div>
 
@@ -81,29 +78,26 @@ document.addEventListener('DOMContentLoaded', function () {
                             <div class="col-md-6">
                                 <label class="form-label">Sort Order</label>
                                 <input type="number" class="form-control" name="images[${index}][sortOrder]" 
-                                       value="${
-                                           img.sortOrder !== undefined
-                                               ? img.sortOrder
-                                               : index
-                                       }" min="0">
+                                       value="${img.sortOrder !== undefined
+                    ? img.sortOrder
+                    : index
+                }" min="0">
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Status</label>
                                 <div class="form-check form-switch form-check-custom form-check-solid mt-2">
                                     <input class="form-check-input" type="checkbox" name="images[${index}][isActive]" 
-                                           value="true" ${
-                                               img.isActive !== false
-                                                   ? 'checked'
-                                                   : ''
-                                           }>
+                                           value="true" ${img.isActive !== false
+                    ? 'checked'
+                    : ''
+                }>
                                     <label class="form-check-label">Active</label>
                                 </div>
                             </div>
                         </div>
 
-                        <input type="hidden" name="images[${index}][imageUrl]" value="${
-                img.url
-            }">
+                        <input type="hidden" name="images[${index}][imageUrl]" value="${img.url
+                }">
                     </div>
                 </div>
             `
@@ -145,6 +139,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 .forEach((el) => el.classList.remove('is-invalid'))
 
             // Validate images
+            console.log('=== BANNER FORM DEBUG ===')
+            console.log('Uploaded images count:', uploadedImages.length)
+            console.log('Uploaded images:', JSON.stringify(uploadedImages, null, 2))
+            console.log('=== END BANNER DEBUG ===')
+
             if (uploadedImages.length === 0) {
                 e.preventDefault()
                 const errorDiv = document.getElementById('field-error-images')

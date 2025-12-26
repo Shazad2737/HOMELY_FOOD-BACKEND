@@ -234,6 +234,12 @@ document.addEventListener('DOMContentLoaded', function () {
             })
         // console.log(sendData)
         // console.log(images)
+        console.log('=== ES-FORM DEBUG ===')
+        console.log('Form ID:', form.getAttribute('id'))
+        console.log('Send Data:', JSON.stringify(sendData, null, 2))
+        console.log('Images object:', images)
+        console.log('Images in sendData:', sendData.images)
+        console.log('=== END DEBUG ===')
         if (Object.keys(images)?.length > 0) {
             // Creating form data with json
             for (let key in sendData) {

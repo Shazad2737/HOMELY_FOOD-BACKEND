@@ -23,10 +23,13 @@ export const bannerSchema = {
             images: Joi.array()
                 .items(
                     Joi.object({
-                        imageUrl: Joi.string().uri().required().messages({
-                            'string.uri': 'Invalid image URL format',
-                            'any.required': 'Image URL is required',
-                        }),
+                        imageUrl: Joi.string()
+                            .pattern(/^https?:\/\/.+/)
+                            .required()
+                            .messages({
+                                'string.pattern.base': 'Image URL must be a valid HTTP/HTTPS URL',
+                                'any.required': 'Image URL is required',
+                            }),
                         redirectUrl: Joi.string()
                             .uri()
                             .optional()
