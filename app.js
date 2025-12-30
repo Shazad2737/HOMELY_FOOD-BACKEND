@@ -41,6 +41,28 @@ configureNunjucks(app)
 
 app.set('view engine', 'njk')
 
+// Root route - API info
+app.get('/', (req, res) => {
+    res.status(200).json({
+        name: 'Homely Food API',
+        version: 'v1',
+        status: 'running',
+        documentation: '/api/v1',
+        admin: '/admin/auth/login',
+        health: '/health',
+    })
+})
+
+// Favicon handler (prevents 404 for browser requests)
+app.get('/favicon.ico', (req, res) => {
+    res.status(204).end() // No content
+})
+
+// Admin root redirect to login
+app.get('/admin/', (req, res) => {
+    res.redirect('/admin/auth/login')
+})
+
 // Routes
 app.use('/admin', adminRoutes)
 app.use('/api/v1', apiRoutes)
